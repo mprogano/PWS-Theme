@@ -58,6 +58,8 @@
                                                                       data-columnthree="{{ proColumn3 }}"
                                                                       data-columnfour="{{ proColumn4 }}">
                                               {% for product in collections[proCollection].products limit:proLimit %}
+                                                  {% comment %} Bold:POv2 {% endcomment %}
+                                                  {%- include 'bold-product' with product, hide_action: 'skip' -%}
                                                   <div class="item">
                                                       {% assign proImageSize = "263x263" %}
                                                       {% include 'product-grid-item' %}

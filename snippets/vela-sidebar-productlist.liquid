@@ -5,6 +5,8 @@
 		<h3 class="titleSidebar">{{ section.settings.sidebar_productlist_title }}</h3>
 		<div class="velaContent">
 			{% for product in collections[itemCollection].products limit:itemLimit %}
+                {% comment %} Bold:POv2 {% endcomment %}
+                {%- include 'bold-product' with product, hide_action: 'skip' -%}
 				{% assign proImageSize = 'compact' %}
 				{% assign on_sale = false %}
 				{% if product.compare_at_price > product.price %}

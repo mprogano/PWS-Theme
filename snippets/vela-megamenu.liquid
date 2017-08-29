@@ -33,6 +33,8 @@
                         <div class="listProduct">
                             {% assign collectionTitle = block.settings.velamenu_product_collection %}
                             {% for product in collections[collectionTitle].products limit:3 %}
+                                {% comment %} Bold:POv2 {% endcomment %}
+                                {%- include 'bold-product' with product, hide_action: 'skip' -%}
                                 {% assign onSale = false %}
                                 {% if product.compare_at_price > product.price %}
                                     {% assign onSale = true %}

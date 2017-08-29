@@ -339,7 +339,7 @@ vela.floatHeader = function(){
         if(status){
             $('#vigor--Header').addClass('headerFixed');
             $('#pageContainer').css('padding-top', $('#vigor--Header').height());
-          	var hideheight =  $('#vigor--Header').height() + 120;
+          	var hideheight = $('#vigor--Header').height() + 120;
             var pos = $(window).scrollTop();
             if( pos >= hideheight ){
                 $('#Header--Main').addClass('vigor--HeaderFixed');
@@ -365,23 +365,25 @@ vela.floatHeader = function(){
             }
         }
     }
-    function velaFloatHeaderChange(){
+    function velaFloatHeaderChange(){ //THIS ONE!
         if (window.float_header){
             if (($(window).width()) >= 992){
-                var hideheight =  $('#vigor--Header').height() + 120;
+                var hideheight =  250;//$('#vigor--Header').height() + 120;
               	var topbarheight =  $('#topBar').outerHeight();
+              	var topheaderheight =  $('#Header--Main .header-full').outerHeight();
+              	var toptotalh = topbarheight + topheaderheight;
                 var pos = $(window).scrollTop();
                 if( pos >= hideheight ){
                     $('#Header--Main').addClass('vigor--HeaderFixed');
-                  	$('#vigor--Header').css('margin-top', -topbarheight);
+                  	$('#vigor--Header').css('top', -toptotalh);
                 }else {
                     $('#Header--Main').removeClass('vigor--HeaderFixed');
-                  	$('#vigor--Header').css('margin-top', 'auto');
+                  	$('#vigor--Header').css('top', 0);
                 }
             }
             else if (($(window).width()) <= 991){
                 $('#Header--Main').removeClass('vigor--HeaderFixed');
-               	$('#vigor--Header').css('margin-top', 'auto');
+               	$('#vigor--Header').css('top', 0);
             }
         }
     }
@@ -667,7 +669,6 @@ vela.ajaxFilter = function(){
             },
             error: function(xhr, text) {
                 $('#loading').hide();
-
             }
         });
     }
@@ -1102,6 +1103,9 @@ vela.quickview = function(){
             quickview.find(".pricePrimary").html(Shopify.formatMoney(product.price, window.money_format));
             quickview.find(".proBoxInfo").attr("id", "product-" + product.id);
             quickview.find(".formQuickview").attr("id", "product-actions-" + product.id);
+            // Bold:POv2 
+            quickview.find(".formQuickview .bold_options").attr("data-product-id", product.id);
+            // Bold:POv2 
             quickview.find(".formQuickview select").attr("id", "productSelectQuickview");
             quickview.find(".proBoxInfo .quickviewName").text(product.title);
             quickview.find(".proBoxInfo .quickViewVendor").append("<label>{{ 'products.product.vendor' | t }}</label>: " + product.vendor);
@@ -1145,6 +1149,11 @@ vela.quickview = function(){
                 }
                 $qtySelector.val(qty);
             });
+            // Bold:POv2   
+            if(typeof BOLD === 'object' && BOLD.options && BOLD.options.app && typeof BOLD.options.app.boot === 'function'){              
+              BOLD.options.app.boot();
+            } 
+            // Bold:POv2 
             ajaxCart.init({
               formSelector: '.formQuickview',
               cartContainer: '#cartContainer',
@@ -1156,7 +1165,6 @@ vela.quickview = function(){
         });
         return false;
     });
-      
     $(document).on('click', '.btnAddToCart', function(e){
       	var producthandle = $(this).data("handle");
       	Shopify.getProduct(producthandle,function(product) {

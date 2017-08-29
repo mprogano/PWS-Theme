@@ -44,9 +44,10 @@
                   {% endif %}
                 </div>
                  <div class="proButton">
+                   <!--                    b:bold -->
                      <div class="product-action">
                         {% assign variantCount = product.variants | size %}
-                        <form action="/cart/add" method="post" enctype="multipart/form-data" class="formAddToCart">
+                        <form action="/cart/add" method="post" enctype="multipart/form-data" class="no_bold_options formAddToCart">
                             <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
                             {% if sold_out %}
                                 <button class="btn btnAddToCart disabled" type="submit" value="Submit" disabled>
@@ -60,10 +61,20 @@
                                         <span class="select_options">{{ 'products.product.select_options' | t }}</span>
                                     </a>
                                 {% else %}
-                                    <button class="btn btnAddToCart" type="submit" value="Submit" data-handle="{{ product.handle }}">
+                                      <button class="btn btnAddToCart" type="submit" value="Submit" data-handle="{{ product.handle }}">
+                                          <i class="ti-shopping-cart-full"></i>
+                                          <span>{{ 'products.product.add_to_cart' | t }}</span>
+                                      </button>
+                          			<!-- Bold:POv2 -->
+                          		    {% comment %}
+                          
+                                    <a class="btn btnAddToCart" href="{{ product.url }}" title="{{ 'products.product.select_options' | t }}">
                                         <i class="ti-shopping-cart-full"></i>
-                                        <span>{{ 'products.product.add_to_cart' | t }}</span>
-                                    </button>
+                                        <span class="select_options">{{ 'products.product.select_options' | t }}</span>
+                                    </a>
+                                    {% endcomment %}
+                                    <!-- Bold:POv2 -->
+                          
                                 {% endif %}
                             {% endif %}
                         </form>

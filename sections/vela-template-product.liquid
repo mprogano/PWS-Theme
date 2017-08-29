@@ -1,3 +1,5 @@
+{% comment %} Bold:POv2 {% endcomment %}
+{%- include 'bold-product' with product, hide_action: 'break', output: 'none' -%}
 {% assign proImageSize = section.settings.image_size %}
 {% assign current_variant = product.selected_or_first_available_variant %}
 <div class="productBox" itemscope itemtype="http://schema.org/Product">
@@ -43,7 +45,7 @@
                         {{ current_variant.price | money }}
                     </span>
                     {% if product.compare_at_price > product.price %}
-                        <span id="ComparePrice" class="priceProduct priceCompare">
+                        <span id="ComparePrice" class="bold_option_price_display priceProduct priceCompare">
                             {{ current_variant.compare_at_price | money }}
                         </span>
                     {% endif %}
@@ -105,6 +107,9 @@
                                     {% endfor %}
                                 {% endif %}
                             {% endif %}
+                            <!-- Bold:POv2 -->
+                            <div class="bold_options" data-product-id="{{ product.id }}"></div>
+                            <!-- Bold:POv2 -->                          
                             <div class="proQuantity">
                                   <label for="Quantity" class="qtySelector">{{ 'products.product.quantity' | t }}</label>
                                   <input type="number" id="Quantity" name="quantity" value="1" min="1" class="qtySelector">
@@ -125,9 +130,6 @@
         <section class="proDetailInfo">
             {% if section.settings.product_tab_type == 'protab' %}
                 <ul class="nav nav-tabs">
-                    {% if section.settings.product_tab4_enable %}
-                        <li><a href="#proTabs4" data-toggle="tab">{{ section.settings.product_tab4_title }}</a></li>
-                    {% endif %}
                     {% if section.settings.product_tab1_enable %}
                         <li><a href="#proTabs1" data-toggle="tab">{{ section.settings.product_tab1_title }}</a></li>
                     {% endif %}
@@ -137,15 +139,11 @@
                     {% if section.settings.product_tab3_enable %}
                         <li><a href="#proTabs3" data-toggle="tab">{{ section.settings.product_tab3_title }}</a></li>
                     {% endif %}
+                    {% if section.settings.product_tab4_enable %}
+                        <li><a href="#proTabs4" data-toggle="tab">{{ section.settings.product_tab4_title }}</a></li>
+                    {% endif %}
                 </ul>
                 <div class="tab-content">
-                    {% if section.settings.product_tab4_enable %}
-                        <div class="tab-pane" id="proTabs4">
-                            {% if settings.product_reviews_enable %}
-                                <div id="shopify-product-reviews" data-id="{{product.id}}">{{ product.metafields.spr.reviews }}</div>
-                            {% endif %}
-                        </div>
-                    {% endif %}
                     {% if section.settings.product_tab1_enable %}
                         <div class="tab-pane" id="proTabs1">{{ product.description }}</div>
                     {% endif %}
@@ -154,6 +152,13 @@
                     {% endif %}
                     {% if section.settings.product_tab3_enable %}
                         <div class="tab-pane" id="proTabs3">{{ section.settings.product_tab3_content }}</div>
+                    {% endif %}
+                    {% if section.settings.product_tab4_enable %}
+                        <div class="tab-pane" id="proTabs4">
+                            {% if settings.product_reviews_enable %}
+                                <div id="shopify-product-reviews" data-id="{{product.id}}">{{ product.metafields.spr.reviews }}</div>
+                            {% endif %}
+                        </div>
                     {% endif %}
                 </div>
             {% elsif section.settings.product_tab_type == 'propanel' %}
@@ -353,7 +358,7 @@
             {
                 "type": "checkbox",
                 "id": "product_tab4_enable",
-                "label": "4th Enable Tab?",
+                "label": "4th Enable Tab? (Reviews)",
                 "default": true
             },
             {

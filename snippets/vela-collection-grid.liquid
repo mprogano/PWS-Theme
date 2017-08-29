@@ -49,6 +49,8 @@
             <div id="velaProList" class="proList grid">
                 <div class="velaFlexRow flexRow">
                     {% for product in collection.products %}
+                        {% comment %} Bold:POv2 {% endcomment %}
+                        {%- include 'bold-product' with product, hide_action: 'skip' -%}
                         {% if intProColumns == 1 %}
                             {% include 'product-grid-item' with 'col-xs-12' %}
                         {% else %}

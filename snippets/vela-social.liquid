@@ -1,8 +1,5 @@
 {% if socialEnable %}
 	<div class="velaSocial">
-	    {% if socialTitle != blank %}
-	        <h4 class="velaTitle">{{ socialTitle }}</h4>
-	    {% endif %}
 	    <div class="velaContent">        
 	        <ul class="velalistSocial list-unstyled">
 	            {% if socialFacebook != blank %}
@@ -63,5 +60,8 @@
 	            {% endif %}
 	        </ul>
 	    </div>
+	    {% if socialTitle != blank %}
+	        <h4 class="velaTitle">{{ socialTitle }}</h4>
+	    {% endif %}
 	</div>
 {% endif %}

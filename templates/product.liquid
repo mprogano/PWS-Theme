@@ -1,3 +1,5 @@
+{% comment %} Bold:POv2 {% endcomment %}
+{%- include 'bold-product' with product, hide_action: 'break', output: 'none' -%}
 {% assign current_variant = product.selected_or_first_available_variant %}
 <section id="pageContent">
   	{% include 'breadcrumb-product' %}

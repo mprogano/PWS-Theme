@@ -35,6 +35,8 @@
       								{% for collection in collections %}
         								{% paginate collection.products by collection.all_products_count %}
 	          								{% for product in collection.products %}
+                                                {% comment %} Bold:POv2 {% endcomment %}
+                                                {%- include 'bold-product' with product, hide_action: 'skip' -%}
 	            								{% for variant in product.variants %}
 	      											{% capture variant_id %}{{ variant.id }}{% endcapture %}
 	              									{% unless used contains variant_id %}
@@ -78,6 +80,9 @@
 															                            <span class="select_options">{{ 'products.product.select_options' | t }}</span>
 															                        </a>
 																				{% else %}
+                                                                                    <!-- Bold:POv2 -->
+                                                                                    <div class="bold_options" data-product-id="{{ product.id }}"></div>
+                                                                                    <!-- Bold:POv2 -->                                                                          
 																					<button class="btn btnAddToCart" type="submit" value="Submit">
 															                            <span class="fa fa-shopping-cart"></span>
 															                            <span>{{ 'products.product.add_to_cart' | t }}</span>

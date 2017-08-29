@@ -52,16 +52,33 @@ $font-family-serif:       Georgia, "Times New Roman", Times, serif;
 $font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace;
 $font-family-base:        $font-family-sans-serif;
 
-$font-size-base:          $vela-font-size;
+/* --------- */
+
+$font-size-base:          $vela-font-size; //16px
+/*
 $font-size-large:         ceil(($font-size-base * 1.25)); // ~18px
 $font-size-small:         ceil(($font-size-base * 0.85)); // ~12px
 
-$font-size-h1:            floor(($font-size-base * 2.6)); // ~36px
-$font-size-h2:            floor(($font-size-base * 2.15)); // ~30px
-$font-size-h3:            ceil(($font-size-base * 1.7)); // ~24px
-$font-size-h4:            ceil(($font-size-base * 1.25)); // ~18px
+$font-size-h1:            floor(($font-size-base * 1.8)); // ~22px
+$font-size-h2:            floor(($font-size-base * 1.6)); // ~20px
+$font-size-h3:            ceil(($font-size-base * 1.4)); // ~16px
+$font-size-h4:            ceil(($font-size-base * 1.3)); // ~16px
 $font-size-h5:            $font-size-base;
 $font-size-h6:            ceil(($font-size-base * 0.85)); // ~12px
+*/
+
+$font-size-large:         ceil(($font-size-base * 1.25)); // ~20px
+$font-size-small:         ceil(($font-size-base * 0.875)); // ~14px
+
+$font-size-h1:            floor(($font-size-base * 1.5)); // ~24px
+$font-size-h2:            floor(($font-size-base * 1.25)); // ~20px
+$font-size-h3:            ceil(($font-size-base * 1.15)); // ~18px
+$font-size-h4:            $font-size-base; // ~16px
+$font-size-h5:            floor(($font-size-base * .875)); // ~14px
+$font-size-h6:            floor(($font-size-base * .875)); // ~14px
+
+/* --------- */
+
 
 $line-height-base:        1.428571429;
 $line-height-computed:    floor(($font-size-base * $line-height-base));
@@ -330,8 +347,8 @@ $badge-border-radius:         10px;
 $breadcrumb-padding-vertical:   8px;
 $breadcrumb-padding-horizontal: 0px;
 $breadcrumb-bg:                 #f5f5f5;
-$breadcrumb-color:              #D5D6D0;
-$breadcrumb-active-color:       white;
+$breadcrumb-color:              #0276fd;
+$breadcrumb-active-color:       #0276fd;
 $breadcrumb-separator:          "/";
 
 $carousel-text-shadow:                        0 1px 2px rgba(0,0,0,.6);
@@ -1171,6 +1188,24 @@ h1, h2, h3, h4, h5, h6,
 		line-height: 1;
 		color: $headings-small-color;
 	}
+}
+h1 {
+	font-size: 22px;
+}
+h2 {
+	font-size: 20px;
+}
+h3 {
+	font-size: 16px;
+}
+h4 {
+	font-size: 14px;
+}
+h5 {
+	font-size: 12px;
+}
+h6 {
+	font-size: 12px;
 }
 h1, .h1,
 h2, .h2,
@@ -2560,7 +2595,7 @@ tbody.collapse.in { display: table-row-group; }
 		padding: 0 20px 30px 30px;
     }
     .headingPage{
-		color: inherit;
+		color: #0276fd;
     	text-transform: uppercase;
       	padding: 30px 30px 0 30px;
         @media (max-width: 768px){
@@ -6887,9 +6922,6 @@ $velaversubmenu-fontsize:          {{ settings.velavermenu_dropdown_fontsize }};
 //---------- VIII. Blog Page ----------//
 .template-article{
   .articleItem{
-      img{
-		width: 100%;
-      }
       .top_rte{
           i{
 			  margin-right: 6px;
@@ -8599,8 +8631,8 @@ select {
 			 margin: 0;
       	}	
         #topBar{
-			background-color: transparent;
-          	color:#222;
+			background-color: white;
+          	color:#000;
           	.velaCartTop {
                 margin-left: 10px;
             }
@@ -8613,7 +8645,7 @@ select {
                         margin-top: 0;
                         line-height: 1.6em;
                         border: none;
-                        font-size: 14px;
+                        font-size: 16px;
                         margin-right: 0;
                     }
              	 }
@@ -9839,7 +9871,9 @@ select {
     }
     .icon-left{
           width: 38px;
-          display: inline-block;
+          display: block;
+          margin-left:auto;
+          margin-right:auto;
           font-size: 30px;
           color: #000;
           vertical-align: sub;
@@ -9860,6 +9894,7 @@ select {
           	letter-spacing: 0.5px;
         }
         span{
+          	display:block;
           	color: $text-color;
           	font-weight: 400;
         }
@@ -10322,6 +10357,14 @@ a[href^=tel] {
         position:relative;
         display:block;
         color: #fff;
+        &.jsDrawerOpenRight:before{
+			content:"";
+          	 position: absolute;
+             bottom: -4px;
+             right: 0;
+          	 left: 0px;
+          	 height: 10px;
+        }
         > span {
         	display: none;
         	&#CartCount {
@@ -11767,3 +11810,135 @@ a[href^=tel] {
         }
     }
 }
+  
+  
+
+  
+/*
+  *********************************************************************
+  *********************************************************************
+
+  		CUSTOM CSS
+  
+  *********************************************************************
+  *********************************************************************
+*/
+
+  
+  /* Smoother Transition */
+  #vigor--Header {
+    transition: all ease 0.34s;
+  }
+  
+  /* Hide Home Page "About" Area */
+  .shopify-section.block_slide_maps {
+    display:none !important;
+  }
+  
+  /* Spice Up that Footer Newsletter */
+  .vigor-newsletter{
+    .form-group .form-control  {
+      border:1px $vela-color-primary solid;
+      border-radius:4px;
+    }
+    .btnNewsletter{
+      top: 2px;
+      right: 2px;
+      border-radius: 4px;
+    }
+  }
+  #footer .vigor-newsletter .left--box {
+    margin:20px 0;
+  }
+  
+  /* Hide Social At Top - ALWAYS */
+  .headerContent .velaSocial .velaContent { display:none !important; }
+  
+  /* Title for Header, After Social */
+  .headerContent .velaTitle {
+	margin: 0;
+	display: inline-block;
+	padding-left: 5px;
+  }
+  .headerContent .velaContent {
+	display: inline-block;
+  }
+  #topBar .velaSocial ul li a,
+  #topBar .velaSocial ul li a i {
+    color:#0276fd;
+  }
+  
+  /* Alignment of Social Title */
+  #topBar .left-clounm {
+	width: calc(100% - 120px);
+	text-align: center;
+	padding-left: 100px;
+  }
+  @media (max-width:720px) {
+    #topBar .left-clounm {
+      width: auto;
+      text-align: left;
+      padding-left: 0px;
+    }
+  }
+  
+  /* Mobile: Full Width Tabs */
+  @media (max-width:480px) {
+    .proDetailInfo .nav-tabs>li {
+      display:block;
+      width:100%;
+    }
+    .proDetailInfo .nav-tabs>li a {
+      font-weight: 400;
+      width: 100%;
+      border: 1px solid #ddd;
+    }
+    .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+      color: #fff;
+      background-color: #888;
+    }
+  }
+  
+  /* Mobile: Remove top link */
+  @media (max-width:720px) {
+    .velaTopLinks { display:none; }
+  }
+  
+  /* Product Page: Short Desc */
+  .proBoxInfo .proShortDescription .hideonshortdesc,
+  .proBoxInfo .proShortDescription .spec_wrap,
+  .proBoxInfo .proShortDescription p:nth-child(n+3) {
+    display:none !important;
+  }
+  
+  /* Table Design, Layout & Fun! */
+  .spec_table {
+    thead {
+      background: #c1c1c1;
+    }
+    thead, tbody {
+      border: 1px #e7e8e7  solid;
+      tr {
+        border: 1px #e7e8e7  solid;
+        th, td {
+          padding:8px;
+          &:first-child {
+            max-width:250px;
+            width:25%;
+          }
+        }
+        td:first-child {
+          background:#f2f3f2;
+        }
+      }
+    }
+  }
+  
+  /* Cart: ToS */
+  #termsofservice {
+    padding:25px 0px 15px;
+    label {
+      font-size: 14px;
+      font-weight: normal;
+    }
+  }

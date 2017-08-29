@@ -8,11 +8,9 @@
               {% for block in section.blocks %}
                  <div class="col-sp-12 col-xs-{{ block.settings.colvigor_mobile }} col-sm-{{ block.settings.colvigor }} col-md-{{ block.settings.colvigor }}">
                     <div class="lookbook-item" style="margin:{{ block.settings.marginbanner }};">
-                         <a class="image-vigor" href="{{ block.settings.link }}" title="{{ block.settings.heading }}" style="background-image:url({{ block.settings.image | img_url: '2000x' }});">
+                         <a class="image-vigor" href="{{ block.settings.link }}" title="{{ block.settings.heading }}" style="background-image:url({{ block.settings.image | img_url: '2000x2000' }});">
                               {% if block.settings.image != blank %}
                                   <img class="img-responsive" alt="{{ block.settings.heading }}" src="{{ block.settings.image | img_url: '2000x' }}" />
-                              {% else %}
-                                  <img class="img-responsive" alt="{{ shop.name }}" src="http://placehold.it/{{ block.settings.image_size }}" />
                               {% endif %}
                           </a>
                           {% if block.settings.heading != blank %}
@@ -48,6 +46,8 @@
         <div class="collBoxProducts">
             <div id="velaProList" class="proList list">
                 {% for product in collection.products %}
+                    {% comment %} Bold:POv2 {% endcomment %}
+                    {%- include 'bold-product' with product, hide_action: 'skip' -%}
                     <div class="row">
                         {% include 'product-list-item' with 'col-xs-12' %}
                     </div>

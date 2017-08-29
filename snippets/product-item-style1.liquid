@@ -72,6 +72,9 @@
                             <span class="select_options">{{ 'products.product.select_options' | t }}</span>
                         </a>
                     {% else %}
+                        <!-- Bold:POv2 -->
+                        <div class="bold_options" data-product-id="{{ product.id }}"></div>
+                        <!-- Bold:POv2 -->              
                         <button class="btn btnAddToCart" type="submit" value="Submit" data-handle="{{ product.handle }}">
                             <i class="ti-shopping-cart-full"></i>
                             <span>{{ 'products.product.add_to_cart' | t }}</span>

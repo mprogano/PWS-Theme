@@ -22,6 +22,8 @@
 					<div class="proOwlCarousel proList grid">
 						<div class="owl-carousel proLoading">
 							{% for product in collection.products limit:proLimit %}
+                                {% comment %} Bold:POv2 {% endcomment %}
+                                {%- include 'bold-product' with product, hide_action: 'skip' -%}
 								{% unless product.handle == currentProduct.handle %}
 									<div class="item">
 										{% include 'product-grid-item' %}

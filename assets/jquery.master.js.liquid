@@ -9,6 +9,14 @@ function attributeToString(attribute) {
     return jQuery.trim(attribute);
 };
 ShopifyAPI.onCartUpdate = function(cart) {
+    // Bold:POv2 - Update bold cart.
+    if(typeof window.BOLD !== 'undefined'
+       && typeof window.BOLD.common !== 'undefined'
+       && typeof window.BOLD.common.cartDoctor !== 'undefined') {
+      // NOTE: "cart" should be the variable containing the cart json data
+      cart = window.BOLD.common.cartDoctor.fix(cart);
+    }
+    // Bold:POv2   
     // alert('There are now ' + cart.item_count + ' items in the cart.');
 };
 ShopifyAPI.updateCartNote = function(note, callback) {
@@ -18,6 +26,14 @@ ShopifyAPI.updateCartNote = function(note, callback) {
         data: 'note=' + attributeToString(note),
         dataType: 'json',
         success: function(cart) {
+            // Bold:POv2 - Update bold cart.
+            if(typeof window.BOLD !== 'undefined'
+               && typeof window.BOLD.common !== 'undefined'
+               && typeof window.BOLD.common.cartDoctor !== 'undefined') {
+              // NOTE: "cart" should be the variable containing the cart json data
+              cart = window.BOLD.common.cartDoctor.fix(cart);
+            }
+            // Bold:POv2           
             if ((typeof callback) === 'function') {
                 callback(cart);
             }
@@ -38,32 +54,59 @@ ShopifyAPI.onError = function(XMLHttpRequest, textStatus) {
     }
 };
 ShopifyAPI.addItemFromForm = function(form, callback, errorCallback) {
-    var params = {
+  
+    // Bold:POv2 - Use our add-to-cart functionality to enable file uploads with AJAX.
+  	var success_callback = function(line_item) {
+      // Bold:POv2 	
+      if(typeof window.BOLD !== 'undefined'
+         && typeof window.BOLD.common !== 'undefined'
+         && typeof window.BOLD.common.cartDoctor !== 'undefined') {
+        // NOTE: "item" should be the variable containing the item json data from the cart/add.js response
+        line_item = window.BOLD.common.cartDoctor.fixItem(line_item);
+      }
+      // Bold:POv2 
+      if ((typeof callback) === 'function') {
+        callback(line_item, form);
+      }
+      else {
+        ShopifyAPI.onItemAdded(line_item, form);
+      }
+    };	
+    var error_callback = function(XMLHttpRequest, textStatus) {
+          if ((typeof errorCallback) === 'function') {
+          errorCallback(XMLHttpRequest, textStatus);
+        }
+        else {
+          ShopifyAPI.onError(XMLHttpRequest, textStatus);
+        }
+    };
+    if(typeof(BOLD)==='object' && BOLD.helpers && typeof(BOLD.helpers.addItemFromForm) === 'function') {
+      BOLD.helpers.addItemFromForm(form, success_callback, error_callback, {endpoint:'/cart/add.js'});      
+    } else {
+      var params = {
         type: 'POST',
         url: '/cart/add.js',
         data: jQuery(form).serialize(),
         dataType: 'json',
-        success: function(line_item) {
-            if ((typeof callback) === 'function') {
-                callback(line_item, form);
-            }
-            else {
-                ShopifyAPI.onItemAdded(line_item, form);
-            }
-        },
-        error: function(XMLHttpRequest, textStatus) {
-            if ((typeof errorCallback) === 'function') {
-                errorCallback(XMLHttpRequest, textStatus);
-            }
-            else {
-                ShopifyAPI.onError(XMLHttpRequest, textStatus);
-            }
-        }
-    };
-    jQuery.ajax(params);
+        success: success_callback,
+        error: error_callback
+      };
+      jQuery.ajax(params);      
+    }  
+    // Bold:POv2
+  
+  
 };
 ShopifyAPI.getCart = function(callback) {
     jQuery.getJSON('/cart.js', function (cart, textStatus) {
+        // Bold:POv2 - Update bold cart.
+        if(typeof window.BOLD !== 'undefined'
+           && typeof window.BOLD.common !== 'undefined'
+           && typeof window.BOLD.common.cartDoctor !== 'undefined') {
+          // NOTE: "cart" should be the variable containing the cart json data
+          cart = window.BOLD.common.cartDoctor.fix(cart);
+        }
+        // Bold:POv2        
         if ((typeof callback) === 'function') {
             callback(cart);
         }
@@ -79,6 +122,14 @@ ShopifyAPI.changeItem = function(line, quantity, callback) {
         data: 'quantity=' + quantity + '&line=' + line,
         dataType: 'json',
         success: function(cart) {
+            // Bold:POv2 - Update bold cart.
+            if(typeof window.BOLD !== 'undefined'
+               && typeof window.BOLD.common !== 'undefined'
+               && typeof window.BOLD.common.cartDoctor !== 'undefined') {
+              // NOTE: "cart" should be the variable containing the cart json data
+              cart = window.BOLD.common.cartDoctor.fix(cart);
+            }
+            // Bold:POv2            
             if ((typeof callback) === 'function') {
                 callback(cart);
             }
@@ -105,7 +156,9 @@ var ajaxCart = (function(module, $) {
         settings = {
             formSelector       : 'form[action^="/cart/add"]',
             cartContainer      : '#cartContainer',
-            addToCartSelector  : 'input[type="submit"]',
+            // Bold:POv2 addToCartSelector  : 'input[type="submit"]',
+            addToCartSelector  : 'input[type="submit"]:not(.bold_clone)',
+            // Bold:POv2
             cartCountSelector  : null,
             cartCostSelector   : null,
             moneyFormat        : '${{amount}}',
@@ -133,6 +186,14 @@ var ajaxCart = (function(module, $) {
         ShopifyAPI.getCart(cartUpdateCallback);
     };
     updateCountPrice = function (cart) {
+        // Bold:POv2 - Update bold cart.
+        if(typeof window.BOLD !== 'undefined'
+           && typeof window.BOLD.common !== 'undefined'
+           && typeof window.BOLD.common.cartDoctor !== 'undefined') {
+          // NOTE: "cart" should be the variable containing the cart json data
+          cart = window.BOLD.common.cartDoctor.fix(cart);
+        }
+        // Bold:POv2  
         if ($cartCountSelector) {
             $cartCountSelector.html(cart.item_count).removeClass('hidden-count');
             if (cart.item_count === 0) {
@@ -177,11 +238,28 @@ var ajaxCart = (function(module, $) {
         buildCart(cart);
     };
     buildCart = function (cart) {
+      
+        // Bold:POv2 - Update bold cart.
+        if(typeof window.BOLD !== 'undefined'
+           && typeof window.BOLD.common !== 'undefined'
+           && typeof window.BOLD.common.cartDoctor !== 'undefined') {
+          // NOTE: "cart" should be the variable containing the cart json data
+          cart = window.BOLD.common.cartDoctor.fix(cart);
+        }
+        // Bold:POv2    
+       
         $cartContainer.empty();
         if (cart.item_count === 0) {
             $cartContainer
             .append('<p>' + {{ 'cart.general.empty' | t | json }} + '</p>');
             cartCallback(cart);
+            // Bold:POv2          
+            if (window.BOLD && BOLD.common && BOLD.common.eventEmitter &&
+                typeof BOLD.common.eventEmitter.emit === 'function'){
+              BOLD.common.eventEmitter.emit('BOLD_COMMON_cart_loaded', cart);
+            }
+            // Bold:POv2      
+          
             return;
         }
         var items = [],
@@ -217,11 +295,31 @@ var ajaxCart = (function(module, $) {
             totalPrice: Shopify.formatMoney(cart.total_price, settings.moneyFormat)
         }
         $cartContainer.append(template(data));
+      
         cartCallback(cart);
     };
     cartCallback = function(cart) {
+      
+        // Bold:POv2 - Update bold cart.
+        if(typeof window.BOLD !== 'undefined'
+           && typeof window.BOLD.common !== 'undefined'
+           && typeof window.BOLD.common.cartDoctor !== 'undefined') {
+          // NOTE: "cart" should be the variable containing the cart json data
+          cart = window.BOLD.common.cartDoctor.fix(cart);
+        }      
+        // Bold:POv2        
+      
         $body.removeClass('drawerIsLoading');
         $body.trigger('ajaxCart.afterCartLoad', cart);
+
+        // Bold:POv2 - Trigger CheckoutFix
+        if(typeof window.BOLD !== 'undefined'
+           && typeof window.BOLD.options !== 'undefined') {
+          window.BOLD.options.app.checkoutFix();
+        }        
+        // Bold:POv2           
+      
+      
     };
     adjustCart = function () {
         $body.on('click', '.qtyAdjust', function() {
@@ -374,4 +472,5 @@ $(document).ready(function() {
         cartCostSelector: '#CartCost',
         moneyFormat: window.money
     });
+  BOLD.options.app.boot;
 });

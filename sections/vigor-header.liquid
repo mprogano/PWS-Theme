@@ -178,30 +178,43 @@
             <div class="{% if  section.settings.container_enable %}header-full{% else %}container{% endif %}">
               	<div class="{% if  section.settings.container_enable %}clearfix{% else %}row{% endif %}">
                     <div class="headerContent header_conetnt align-items">
-                        <div class="headerCenter col-xs-12 col-sm-3 col-md-3">
-                            {% if template == 'index' %}
-                                <h1 class="vigorLogo" itemscope itemtype="http://schema.org/Organization">
+                        <div class="headerCenter col-xs-12 col-sm-3 col-md-5">
+                            {% if template.name == 'index' %}
+                              <h1 class="h2 site-header__logo" itemscope itemtype="http://schema.org/Organization">
                             {% else %}
-                                <div class="vigorLogo" itemscope itemtype="http://schema.org/Organization">
+                              <div class="h2 site-header__logo" itemscope itemtype="http://schema.org/Organization">
                             {% endif %}
-                            {% if section.settings.logo_use_image %}
-                                <a href="/" itemprop="url" class="LogoLink">
-                                    {% capture image_size %}{{ section.settings.logo_max_width }}x{% endcapture %}
+                              {% if section.settings.logo %}
+                                {%- assign img_url = section.settings.logo | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                                <a href="/" itemprop="url" class="site-header__logo-image{% if section.settings.align_logo == 'center' %} site-header__logo-image--centered{% endif %}">
+                                  {% capture logo_alt %}{{ section.settings.logo.alt | default: shop.name }}{% endcapture %}
+                                  <img class="lazyload js"
+                                       src="{{ section.settings.logo | img_url: '300x300' }}"
+                                       data-src="{{ img_url }}"
+                                       data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+                                       data-aspectratio="{{ section.settings.logo.aspect_ratio }}"
+                                       data-sizes="auto"
+                                       alt="{{ logo_alt | escape }}"
+                                       style="max-width: {{ section.settings.logo_max_width }}px">
+                                  <noscript>
+                                    {% capture image_size %}{{ section.settings.logo_max_width | escape }}x{% endcapture %}
                                     <img src="{{ section.settings.logo | img_url: image_size }}"
-                                    srcset="{{ section.settings.logo | img_url: image_size }} 1x, {{ section.settings.logo | img_url: image_size, scale: 2 }} 2x"
-                                    alt="{{ section.settings.logo.alt | default: shop.name }}"
-                                    itemprop="logo">
+                                         srcset="{{ section.settings.logo | img_url: image_size }} 1x, {{ section.settings.logo | img_url: image_size, scale: 2 }} 2x"
+                                         alt="{{ section.settings.logo.alt | default: shop.name }}"
+                                         itemprop="logo"
+                                         style="max-width: {{ section.settings.logo_max_width }}px;">
+                                  </noscript>
                                 </a>
+                              {% else %}
+                                <a class="site-header__logo-link" href="/" itemprop="url">{{ shop.name }}</a>
+                              {% endif %}
+                            {% if template.name == 'index' %}
+                              </h1>
                             {% else %}
-                                <a href="/" itemprop="url">{{ shop.name }}</a>
-                            {% endif %}
-                            {% if template != 'index' %}
-                                </div>
-                            {% else %}
-                                </h1>
+                              </div>
                             {% endif %}
                         </div>
-                        <div class="col-xs-12 col-sm-9 col-md-9">
+                        <div class="col-xs-12 col-sm-9 col-md-7">
                             <div class="headerCenter clearfix">
                                   <div class="hidden-xs hidden-sm">
                                       {% if section.settings.wg-contactinfo_enable %}
@@ -539,11 +552,6 @@
                 "content": "Logo"
             },
             {
-                "type": "checkbox",
-                "id": "logo_use_image",
-                "label": "Use custom logo"
-            },
-            {
                 "type": "image_picker",
                 "id": "logo",
                 "label": "Logo image"
@@ -552,7 +560,7 @@
               "type": "text",
               "id": "logo_max_width",
               "label": "Custom logo width (in pixels)",
-              "default": "152"
+              "default": "100"
             },
 			{
                 "type": "header",

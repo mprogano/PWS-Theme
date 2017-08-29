@@ -26,7 +26,7 @@
     						        {{ item | link_to_remove_tag: item }}
     					      	</li>
     				      	{% else %}
-    					        {% if collection.tags contains item %} 
+    					        {% if collection.all_tags contains item %} 
     					          	<li data-filter="{{ itemHandleize }}">
     					          		{{ item | link_to_add_tag: item }}
     					          	</li>
@@ -52,7 +52,7 @@
     						        {{ item | link_to_remove_tag: item }}
     					      	</li>
     				      	{% else %}
-    					        {% if collection.tags contains item %} 
+    					        {% if collection.all_tags contains item %} 
     					          	<li data-filter="{{ itemHandleize }}">
     					          		{{ item | link_to_add_tag: item }}
     					          	</li>
@@ -74,14 +74,14 @@
                 			{% assign colorImage = 'color-' | append: i %}
                 			{% if section.settings[setColorName] != blank %}
             			    	{% assign colorName = section.settings[setColorName] | strip %}
-            			    	{% if collection.tags contains colorName %}
+            			    	{% if collection.all_tags contains colorName %}
             			    		{% assign itemHandleize = colorName | handleize %}
     		            			<li {% if current_tags contains colorName %}class="active"{% endif %} data-filter="{{ itemHandleize }}">
     		            				<a href="javascript:void(0)">
                                           	{% if section.settings[colorImage] != blank %}
                                                 <img class="img-responsive" alt="{{ section.settings[colorImage].alt }}" src="{{ section.settings[colorImage] | img_url:'50x50' }}" />
                                             {% else %}
-                                                <img class="img-responsive" alt="{{ shop.name }}" src="http://placehold.it/24x24" />
+                                                <img class="img-responsive" alt="{{ shop.name }}" src="https://placehold.it/24x24" />
                                             {% endif %}
     					              	</a>
     		            			</li>

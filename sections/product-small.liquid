@@ -9,6 +9,8 @@
                     <div class="listProduct">
                         {% assign collectionTitle = section.settings.product_collection1 %}
                         {% for product in collections[collectionTitle].products limit:3 %}
+                            {% comment %} Bold:POv2 {% endcomment %}
+                            {%- include 'bold-product' with product, hide_action: 'skip' -%}
                             {% assign onSale = false %}
                             {% if product.compare_at_price > product.price %}
                                 {% assign onSale = true %}
@@ -46,6 +48,8 @@
                     <div class="listProduct">
                         {% assign collectionTitle = section.settings.product_collection2 %}
                         {% for product in collections[collectionTitle].products limit:3 %}
+                            {% comment %} Bold:POv2 {% endcomment %}
+                            {%- include 'bold-product' with product, hide_action: 'skip' -%}
                             {% assign onSale = false %}
                             {% if product.compare_at_price > product.price %}
                                 {% assign onSale = true %}
@@ -83,6 +87,7 @@
                     <div class="listProduct">
                         {% assign collectionTitle = section.settings.product_collection3 %}
                         {% for product in collections[collectionTitle].products limit:3 %}
+                        {% include 'bold-product' with product, hide_action: 'skip' %}
                             {% assign onSale = false %}
                             {% if product.compare_at_price > product.price %}
                                 {% assign onSale = true %}

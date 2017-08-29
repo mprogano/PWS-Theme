@@ -2,6 +2,8 @@
 <div class="container">
     <div class="row">
       {% for collection in collections %}
+        {% comment %} Bold:POv2 {% endcomment %}
+        {% comment %} {%- include 'bold-product' with collection, hide_action: 'skip' -%} {% endcomment %}
         <div class="col-sp-12 col-xs-6 col-sm-6 col-md-3">
           {% include 'collection-grid-item' %}
         </div>

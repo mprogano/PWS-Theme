@@ -33,6 +33,8 @@
                                                         data-columnthree="{{ proColumn3 }}"
                                                         data-columnfour="{{ proColumn4 }}">
                                 {% for product in collections[proCollection].products limit:proLimit %}
+                                    {% comment %} Bold:POv2 {% endcomment %}
+                                    {%- include 'bold-product' with product, hide_action: 'skip' -%}
                               		{% assign proImageSize = "263x263" %}
                               		{% if proRow == 2 %}
                                         {% assign checkRow  = forloop.index | modulo:proRow %}

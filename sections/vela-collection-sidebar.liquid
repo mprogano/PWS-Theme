@@ -13,7 +13,7 @@
                             {% if section.settings.image != blank %}
                                 <img class="img-responsive" alt="{{ section.settings.image.alt | default: shop.name }}" src="{{ section.settings.image | img_url: section.settings.image_size }}" />
                             {% else %}
-                                <img class="img-responsive" alt="{{ shop.name }}" src="http://placehold.it/{{ section.settings.image_size }}" />
+                                <img class="img-responsive" alt="{{ shop.name }}" src="https://placehold.it/{{ section.settings.image_size }}" />
                             {% endif %}
                         {% if section.settings.link != blank %}</a>{% endif %}
                     </div>
