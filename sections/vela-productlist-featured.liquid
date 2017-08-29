@@ -1,0 +1,104 @@
+{%- assign proCollection = section.settings.collection_handle -%}
+<div class="container">
+	<div id="proListTrending{{ section.id }}" class="velaProducts {{ section.settings.layout }}">
+        <h3 class="velaHomeTitle"><span>{{ section.settings.title }}</span></h3>
+        <div class="velaContent proList--trending proList grid">
+            <div class="row">
+              	{% assign proImageSize = "470x" %}
+              	{% if section.settings.layout == 'layoutOne' %}
+              		{% for product in collections[proCollection].products limit:5 %}
+              			{%- assign productsSize = collections[proCollection].products_count -%}
+              			{% if forloop.index == 1 %}
+              				<div class="firstItem col-xs-12 col-sm-6">
+                            	{% include 'product-grid-item' %}
+              				</div>
+              			{% else %}
+              				<div class="col-xs-12 col-sm-3">
+                            	{% include 'product-grid-item' %}
+              				</div>
+              			{% endif %}
+              		{% endfor %}
+              	{% else %}
+              		{% for product in collections[proCollection].products limit:5 %}
+              			{%- assign productsSize = collections[proCollection].products_count -%}
+              			{% if productsSize < 5 %}
+              				<div class="col-xs-12 col-sm-3">
+                            	{% include 'product-grid-item' %}
+              				</div>
+              			{% else %}
+              				{%- if forloop.index < 5 -%}
+                                {%- if forloop.first -%}
+                                    <div class="col-xs-12 col-sm-6">
+                                      	<div class="row">
+                                          	<div class="col-xs-12 col-sm-6">
+                                        		{% include 'product-grid-item' %}
+                                          	</div>
+                                {%- elsif forloop.index == 4 -%}
+                                          	<div class="col-xs-12 col-sm-6">
+                                        		{% include 'product-grid-item' %}
+                                            </div>
+                                      	</div>
+                                    </div>
+              					{%- else -%}
+              						<div class="col-xs-12 col-sm-6">
+                                        {% include 'product-grid-item' %}
+                					</div>
+                                {%- endif -%}
+              				{%- endif -%}
+              				{%- if forloop.index == 5 -%}
+                                <div class="lastItem col-xs-12 col-sm-6">
+									{% include 'product-grid-item' %}
+                                </div>
+              				{%- endif -%}
+              			{% endif %}
+              		{% endfor %}
+              	{% endif %}
+            </div>
+        </div>
+  	</div>
+</div>
+{% schema %}
+{
+	"name": "Vigor Products Featured",
+	"class": "VigorFramework vigorFramework",
+	"settings":[
+		{
+            "type": "select",
+            "id": "layout",
+            "label": "Select Layout",
+            "default": "layoutOne",
+            "options":[
+            	{
+            		"value": "layoutOne",
+                    "label": "Layout One"
+            	},
+				{
+            		"value": "layoutTwo",
+                    "label": "Layout Two"
+            	}
+            ]
+        },
+		{
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "placeholder": "Title of section"
+        },
+        {
+            "type": "collection",
+            "id": "collection_handle",
+            "label": "Collection"
+        }
+	],
+	"presets": [
+        {
+            "name": "Vigor Products Featured",
+            "category": "Vigor Product",
+            "settings": {
+                "title": "Product List",
+                "collection_handle": "frontpage"
+            }
+        }
+    ]
+}
+{% endschema %}

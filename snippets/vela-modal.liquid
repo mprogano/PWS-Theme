@@ -1,0 +1,109 @@
+<div id="loading" style="display:none;"><div class="loader"></div></div>
+{% if settings.loading_enable %}
+	{% if settings.loadingsite_style == "style1" %}
+        <div id="loadingSite">
+            <div class="loader"></div>
+            {% if settings.image_loadsite_enable %}
+                <span class="loadimg"> <img class="img-responsive" src="{{ 'logoloadsite.png' | asset_url }}" alt="" /></span>
+             {% endif %}
+        </div>
+	{% endif %}	
+	{% if settings.loadingsite_style == "style2" %}
+        <div id="loadingSite" class="style2">
+				<div class="loader_style">
+					<div class="indeterminate"></div>
+			    </div>
+        </div>
+	{% endif %}
+{% endif %}
+<div id="newsletterAlert" class="modal fade" style="display:none;">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+          	<div class="alert alert-success">
+          		<div class="newsletterAlert">{{ 'general.newsletter_form.alertsuccess' | t }}</div>
+          	</div>
+		</div>
+	</div>
+</div>
+{% if settings.quickview_enable %}
+	{% assign count_images = product.images | size %}
+	{% assign column_center = 'col-sm-12 col-md-12' %}
+	<div id="velaQuickView" style="display:none;">
+	    <div class="quickviewOverlay"></div>
+	    <div class="jsQuickview"></div>
+	    <div id="quickviewModal" class="quickviewProduct" style="display:none;">
+	    	<a title="Close" class="quickviewClose" href="javascript:void(0);"></a>
+	        <div class="proBoxPrimary row">
+	            <div class="proBoxImage col-xs-12 col-sm-12 col-md-5">
+	                <div class="proFeaturedImage">
+	                    <a class="proImage" title="" href="#">
+                        	<img class="img-responsive proImageQuickview" src="{{ 'loading.gif' | asset_url }}" alt="Quickview"  />
+                        	<span class="loadingImage"></span>
+                        </a>
+	                </div>
+	                <div class="proThumbnails proThumbnailsQuickview clearfix">
+	                    <div class="owl-thumblist">
+                            <div class="owl-carousel">
+
+                            </div>
+                        </div>
+	                </div>
+	            </div>
+	            <div class="proBoxInfo col-xs-12 col-sm-12 col-md-7">
+	                <h3 class="quickviewName">&nbsp;</h3>
+	                <div class="quickviewAvailability{% if settings.product_available_enable == false %} hidden{% endif %}"></div>
+	                <h5 class="quickViewVendor {% if settings.product_vendor_enable == false %} hidden{% endif %}"></h5>
+	                <h5 class="quickViewType {% if settings.product_type_enable == false %} hidden{% endif %}"></h5>
+	                <div class="proShortDescription rte"></div>
+	                <form action="/cart/add" method="post" enctype="multipart/form-data" class="formQuickview form-ajaxtocart">
+                        <div class="proPrice clearfix">
+                            <span class="priceProduct pricePrimary"></span>
+                            <span class="priceProduct priceCompare"></span>
+                        </div>
+                        <div class="proVariantsQuickview"><select name='id' style="display:none"></select></div>
+                        <div class="proQuantity">
+                            <label for="Quantity" class="qtySelector">{{ 'products.product.quantity' | t }}</label>
+                            <input type="number" id="Quantity" name="quantity" value="1" min="1" class="qtySelector">
+                        </div>
+                        <div class="proButton">
+                            <button type="submit" name="add" class="btn btnAddToCart">
+                                <span>{{ 'products.product.add_to_cart' | t }}</span>
+                            </button>
+                        </div>
+                    </form>
+	            </div>
+	        </div>
+	    </div>    
+	</div>
+{% endif %}
+
+{% if settings.ajax_cart_method == "only_mini_cart" %}
+<div id="velaPopupCart" style="display:none;">
+  <div class="PopupCartOverlay"></div>
+  <div class="jsPopupview"></div>
+  <div id="PopupCartModal" class="PopupCartProduct" style="display:none;">
+    <a title="Close" class="popupClose" href="javascript:void(0);"></a>
+    <div class="proBoxPrimary row">
+      <div class="proBoxImage col-xs-12 col-sm-12 col-md-4">
+        <div class="proFeaturedImage">
+          <a class="proImage" title="" href="#">
+            <img class="img-responsive proImageProduct" src="{{ 'loading.gif' | asset_url }}" alt="Quickview"/>
+          </a>
+        </div>
+      </div>
+      <div class="proBoxInfo col-xs-12 col-sm-12 col-md-8">
+        <h3 class="proName">&nbsp;</h3>
+        <p class="success-message">is added to your shopping cart.</p>
+        <div class="actions">
+          <button class="btn-secondary continue-shopping" onclick="javascript:void(0)" >Continue Shopping</button>
+          <button class="btn-secondary" onclick="window.location='/cart'">Go to cart</button>
+        </div>
+      </div>
+    </div>
+  </div>    
+</div>
+{% endif %}
+
+{% if settings.gotop_enable %}
+	<div id="goToTop" class="hidden-xs hidden-sm"><span class="fa fa-long-arrow-up"></span></div>
+{% endif %}

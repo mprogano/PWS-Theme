@@ -1,0 +1,508 @@
+<div class="product_small">
+  	<div class="{% if section.settings.container_enable %}product-small-full{% else %}container{% endif %}">
+      	<div class="{% if section.settings.container_enable %}clearfix  {% else %}row{% endif %}">
+            <div class="col-sp-12 col-xs-{{ section.settings.colvigor_mobile1 }} col-sm-{{ section.settings.colvigor_mobile1 }} col-md-{{ section.settings.colvigor1 }}">
+                <div class="productlist">
+                    {% if section.settings.product_title1 != blank %}
+                        <h3 class="velaHomeTitle"><span>{{ section.settings.product_title1 }}</span></h3>
+                    {% endif %}
+                    <div class="listProduct">
+                        {% assign collectionTitle = section.settings.product_collection1 %}
+                        {% for product in collections[collectionTitle].products limit:3 %}
+                            {% assign onSale = false %}
+                            {% if product.compare_at_price > product.price %}
+                                {% assign onSale = true %}
+                            {% endif %}
+                            <div class="block_product_small clearfix">
+                                <div class="proImage">
+                                    <a class="proImageLink" href="{{ product.url }}" title="">
+                                        <img class="img-responsive" src="{{ product.featured_image | product_img_url:'213x202' }}" alt="{{ product.featured_image.alt }}">
+                                    </a>
+                                </div>
+                                <div class="proMeta">
+                                    <h5 class="proName">
+                                        <a href="{{ product.url }}" title="">{{ product.title }}</a>
+                                    </h5>
+                                    <div class="proReviews">
+                                        <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+                                    </div>
+                                    <div class="boxProPrice">
+                                        {% if onSale %}
+                                            <span class="oldPrice proPrice">{{ product.compare_at_price | money }}</span>
+                                        {% endif %}
+                                        <span class="priceProduct priceSale">{{ product.price | money }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+              </div>
+              <div class="col-sp-12 col-xs-{{ section.settings.colvigor_mobile2 }} col-sm-{{ section.settings.colvigor_mobile2 }} col-md-{{ section.settings.colvigor2 }}">
+                <div class="productlist">
+                    {% if section.settings.product_title2 != blank %}
+                        <h3 class="velaHomeTitle"><span>{{ section.settings.product_title2 }}</span></h3>
+                    {% endif %}
+                    <div class="listProduct">
+                        {% assign collectionTitle = section.settings.product_collection2 %}
+                        {% for product in collections[collectionTitle].products limit:3 %}
+                            {% assign onSale = false %}
+                            {% if product.compare_at_price > product.price %}
+                                {% assign onSale = true %}
+                            {% endif %}
+                            <div class="block_product_small clearfix">
+                                <div class="proImage">
+                                    <a class="proImageLink" href="{{ product.url }}" title="">
+                                        <img class="img-responsive" src="{{ product.featured_image | product_img_url:'213x202' }}" alt="{{ product.featured_image.alt }}">
+                                    </a>
+                                </div>
+                                <div class="proMeta">
+                                    <h5 class="proName">
+                                        <a href="{{ product.url }}" title="">{{ product.title }}</a>
+                                    </h5>
+                                    <div class="proReviews">
+                                        <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+                                    </div>
+                                    <div class="boxProPrice">
+                                        {% if onSale %}
+                                            <span class="oldPrice proPrice">{{ product.compare_at_price | money }}</span>
+                                        {% endif %}
+                                        <span class="priceProduct priceSale">{{ product.price | money }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+              </div>
+              <div class="col-sp-12 col-xs-{{ section.settings.colvigor_mobile3 }} col-sm-{{ section.settings.colvigor_mobile3 }} col-md-{{ section.settings.colvigor3 }}">
+                <div class="productlist">
+                    {% if section.settings.product_title3 != blank %}
+                        <h3 class="velaHomeTitle"><span>{{ section.settings.product_title3 }}</span></h3>
+                    {% endif %}
+                    <div class="listProduct">
+                        {% assign collectionTitle = section.settings.product_collection3 %}
+                        {% for product in collections[collectionTitle].products limit:3 %}
+                            {% assign onSale = false %}
+                            {% if product.compare_at_price > product.price %}
+                                {% assign onSale = true %}
+                            {% endif %}
+                            <div class="block_product_small clearfix">
+                                <div class="proImage">
+                                    <a class="proImageLink" href="{{ product.url }}" title="">
+                                        <img class="img-responsive" src="{{ product.featured_image | product_img_url:'213x202' }}" alt="{{ product.featured_image.alt }}">
+                                    </a>
+                                </div>
+                                <div class="proMeta">
+                                    <h5 class="proName">
+                                        <a href="{{ product.url }}" title="">{{ product.title }}</a>
+                                    </h5>
+                                    <div class="proReviews">
+                                        <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+                                    </div>
+                                    <div class="boxProPrice">
+                                        {% if onSale %}
+                                            <span class="oldPrice proPrice">{{ product.compare_at_price | money }}</span>
+                                        {% endif %}
+                                        <span class="priceProduct priceSale">{{ product.price | money }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+              </div>
+          </div>
+    </div>
+</div>
+{% schema %}
+	{
+      	"name": "Product List Small",
+      	"settings": [
+			{
+                "type": "header",
+                "content": "Product List Small 1"
+            },
+			{
+              "type": "checkbox",
+              "id": "container_enable",
+              "label": "Full width Enable?",
+              "default": true
+            },
+			{
+                  "type": "select",
+                  "id": "colvigor1",
+                  "label": "Setting column Images Destop",
+                  "options": [
+                        {
+                          "value": "1",
+                          "label": "1\/12 (8.33%)"
+                        },
+                        {
+                          "value": "2",
+                          "label": "2\/12 (16.67%)"
+                        },
+                        {
+                          "value": "3",
+                          "label": "3\/12 (25.00%)"
+                        },
+                        {
+                          "value": "4",
+                          "label": "4\/12 (33.33%)"
+                        },
+                        {
+                          "value": "5",
+                          "label": "5\/12 (41.67%)"
+                        },
+                        {
+                          "value": "6",
+                          "label": "6\/12 (50.00%)"
+                        },
+                        {
+                          "value": "7",
+                          "label": "7\/12 (58.33%)"
+                        },
+                        {
+                          "value": "8",
+                          "label": "8\/12 (66.67%)"
+                        },
+                        {
+                          "value": "9",
+                          "label": "9\/12 (75.00%)"
+                        },
+                        {
+                          "value": "10",
+                          "label": "10\/12 (83.33%)"
+                        },
+                        {
+                          "value": "11",
+                          "label": "11\/12 (91.67%)"
+                        },
+                        {
+                          "value": "12",
+                          "label": "12\/12 (100.00%)"
+                        }
+                       ]
+                },
+                {
+                  "type": "select",
+                  "id": "colvigor_mobile1",
+                  "label": "Setting column Images Mobile",
+                  "options": [
+                        {
+                          "value": "1",
+                          "label": "1\/12 (8.33%)"
+                        },
+                        {
+                          "value": "2",
+                          "label": "2\/12 (16.67%)"
+                        },
+                        {
+                          "value": "3",
+                          "label": "3\/12 (25.00%)"
+                        },
+                        {
+                          "value": "4",
+                          "label": "4\/12 (33.33%)"
+                        },
+                        {
+                          "value": "5",
+                          "label": "5\/12 (41.67%)"
+                        },
+                        {
+                          "value": "6",
+                          "label": "6\/12 (50.00%)"
+                        },
+                        {
+                          "value": "7",
+                          "label": "7\/12 (58.33%)"
+                        },
+                        {
+                          "value": "8",
+                          "label": "8\/12 (66.67%)"
+                        },
+                        {
+                          "value": "9",
+                          "label": "9\/12 (75.00%)"
+                        },
+                        {
+                          "value": "10",
+                          "label": "10\/12 (83.33%)"
+                        },
+                        {
+                          "value": "11",
+                          "label": "11\/12 (91.67%)"
+                        },
+                        {
+                          "value": "12",
+                          "label": "12\/12 (100.00%)"
+                        }
+                  ]
+            },
+            {
+                "type": "text",
+                "id": "product_title1",
+                "label": "Block Title 1"
+            },
+            {
+                "type": "collection",
+                "id": "product_collection1",
+                "label": "Collection 2"
+            },
+			{
+                "type": "header",
+                "content": "Product List Small 2"
+            },
+			{
+                  "type": "select",
+                  "id": "colvigor2",
+                  "label": "Setting column Images Destop",
+                  "options": [
+                        {
+                          "value": "1",
+                          "label": "1\/12 (8.33%)"
+                        },
+                        {
+                          "value": "2",
+                          "label": "2\/12 (16.67%)"
+                        },
+                        {
+                          "value": "3",
+                          "label": "3\/12 (25.00%)"
+                        },
+                        {
+                          "value": "4",
+                          "label": "4\/12 (33.33%)"
+                        },
+                        {
+                          "value": "5",
+                          "label": "5\/12 (41.67%)"
+                        },
+                        {
+                          "value": "6",
+                          "label": "6\/12 (50.00%)"
+                        },
+                        {
+                          "value": "7",
+                          "label": "7\/12 (58.33%)"
+                        },
+                        {
+                          "value": "8",
+                          "label": "8\/12 (66.67%)"
+                        },
+                        {
+                          "value": "9",
+                          "label": "9\/12 (75.00%)"
+                        },
+                        {
+                          "value": "10",
+                          "label": "10\/12 (83.33%)"
+                        },
+                        {
+                          "value": "11",
+                          "label": "11\/12 (91.67%)"
+                        },
+                        {
+                          "value": "12",
+                          "label": "12\/12 (100.00%)"
+                        }
+                       ]
+                },
+                {
+                  "type": "select",
+                  "id": "colvigor_mobile2",
+                  "label": "Setting column Images Mobile",
+                  "options": [
+                        {
+                          "value": "1",
+                          "label": "1\/12 (8.33%)"
+                        },
+                        {
+                          "value": "2",
+                          "label": "2\/12 (16.67%)"
+                        },
+                        {
+                          "value": "3",
+                          "label": "3\/12 (25.00%)"
+                        },
+                        {
+                          "value": "4",
+                          "label": "4\/12 (33.33%)"
+                        },
+                        {
+                          "value": "5",
+                          "label": "5\/12 (41.67%)"
+                        },
+                        {
+                          "value": "6",
+                          "label": "6\/12 (50.00%)"
+                        },
+                        {
+                          "value": "7",
+                          "label": "7\/12 (58.33%)"
+                        },
+                        {
+                          "value": "8",
+                          "label": "8\/12 (66.67%)"
+                        },
+                        {
+                          "value": "9",
+                          "label": "9\/12 (75.00%)"
+                        },
+                        {
+                          "value": "10",
+                          "label": "10\/12 (83.33%)"
+                        },
+                        {
+                          "value": "11",
+                          "label": "11\/12 (91.67%)"
+                        },
+                        {
+                          "value": "12",
+                          "label": "12\/12 (100.00%)"
+                        }
+                  ]
+            },
+            {
+                "type": "text",
+                "id": "product_title2",
+                "label": "Block Title 2"
+            },
+            {
+                "type": "collection",
+                "id": "product_collection2",
+                "label": "Collection 2"
+            },
+			{
+                "type": "header",
+                "content": "Product List Small 3"
+            },
+			{
+                  "type": "select",
+                  "id": "colvigor3",
+                  "label": "Setting column Images Destop",
+                  "options": [
+                        {
+                          "value": "1",
+                          "label": "1\/12 (8.33%)"
+                        },
+                        {
+                          "value": "2",
+                          "label": "2\/12 (16.67%)"
+                        },
+                        {
+                          "value": "3",
+                          "label": "3\/12 (25.00%)"
+                        },
+                        {
+                          "value": "4",
+                          "label": "4\/12 (33.33%)"
+                        },
+                        {
+                          "value": "5",
+                          "label": "5\/12 (41.67%)"
+                        },
+                        {
+                          "value": "6",
+                          "label": "6\/12 (50.00%)"
+                        },
+                        {
+                          "value": "7",
+                          "label": "7\/12 (58.33%)"
+                        },
+                        {
+                          "value": "8",
+                          "label": "8\/12 (66.67%)"
+                        },
+                        {
+                          "value": "9",
+                          "label": "9\/12 (75.00%)"
+                        },
+                        {
+                          "value": "10",
+                          "label": "10\/12 (83.33%)"
+                        },
+                        {
+                          "value": "11",
+                          "label": "11\/12 (91.67%)"
+                        },
+                        {
+                          "value": "12",
+                          "label": "12\/12 (100.00%)"
+                        }
+                       ]
+                },
+                {
+                  "type": "select",
+                  "id": "colvigor_mobile3",
+                  "label": "Setting column Images Mobile",
+                  "options": [
+                        {
+                          "value": "1",
+                          "label": "1\/12 (8.33%)"
+                        },
+                        {
+                          "value": "2",
+                          "label": "2\/12 (16.67%)"
+                        },
+                        {
+                          "value": "3",
+                          "label": "3\/12 (25.00%)"
+                        },
+                        {
+                          "value": "4",
+                          "label": "4\/12 (33.33%)"
+                        },
+                        {
+                          "value": "5",
+                          "label": "5\/12 (41.67%)"
+                        },
+                        {
+                          "value": "6",
+                          "label": "6\/12 (50.00%)"
+                        },
+                        {
+                          "value": "7",
+                          "label": "7\/12 (58.33%)"
+                        },
+                        {
+                          "value": "8",
+                          "label": "8\/12 (66.67%)"
+                        },
+                        {
+                          "value": "9",
+                          "label": "9\/12 (75.00%)"
+                        },
+                        {
+                          "value": "10",
+                          "label": "10\/12 (83.33%)"
+                        },
+                        {
+                          "value": "11",
+                          "label": "11\/12 (91.67%)"
+                        },
+                        {
+                          "value": "12",
+                          "label": "12\/12 (100.00%)"
+                        }
+                  ]
+            },
+            {
+                "type": "text",
+                "id": "product_title3",
+                "label": "Block Title 3"
+            },
+            {
+                "type": "collection",
+                "id": "product_collection3",
+                "label": "Collection 3"
+            }
+        ],
+        "presets": [
+            {
+                "name": "Product list small",
+                "category": "Product"
+            }
+        ]
+	}
+{% endschema %}

@@ -1,0 +1,49 @@
+<div class="clearfix block_banner_menu" style="clear: both;">
+  	<div class="align-items">
+        {% if block.settings.image11 != blank %}
+            <div class="col-xs-12">
+                <div class="menuImage">
+                   <a class="banner-menu banner_effect" href="{{ block.settings.link11 }}">
+                            <img class="img-responsive" alt="banner" src="{{ block.settings.image11 | img_url: '2000x' }}" />
+                    </a>
+                </div>
+            </div>
+        {% endif %}
+        {% if block.settings.image22 != blank %}
+            <div class="col-xs-12">
+                <div class="menuImage">
+                   <a class="banner-menu banner_effect" href="{{ block.settings.link22 }}">
+                            <img class="img-responsive" alt="banner" src="{{ block.settings.image22 | img_url: '2000x' }}" />
+                    </a>
+                </div>
+            </div>
+        {% endif %}
+        {% if block.settings.image33 != blank %}
+        <div class="col-xs-12">
+            <div class="menuImage">
+               <a class="banner-menu banner_effect" href="{{ block.settings.link33 }}">
+                        <img class="img-responsive" alt="banner" src="{{ block.settings.image33 | img_url: '2000x' }}" />
+                </a>
+            </div>
+        </div>
+       {% endif %}
+      	{% if block.settings.image55 != blank %}
+            <div class="col-xs-12">
+                <div class="menuImage">
+                   <a class="banner-menu banner_effect" href="{{ block.settings.link55 }}">
+                         <img class="img-responsive" alt="banner" src="{{ block.settings.image55 | img_url: '2000x' }}" />
+                    </a>
+                </div>
+            </div>
+      	{% endif %}
+   </div>
+    {% if block.settings.image44 != blank %}
+        <div class="col-xs-12 col-sm-12">
+            <div class="menuImage"> 
+               <a class="banner-menu banner_effect" style="margin-top:30px;" href="{{ block.settings.link44 }}">
+                        <img class="img-responsive" alt="banner" src="{{ block.settings.image44 | img_url: '2000x' }}" />
+                </a>
+            </div>
+        </div>
+    {% endif %}
+</div>

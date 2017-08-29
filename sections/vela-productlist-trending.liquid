@@ -1,0 +1,77 @@
+{%- assign proCollection = section.settings.collection_handle -%}
+<div class="container">
+	<div id="proListTrending{{ section.id }}" class="mb-4 velaProducts {{ section.settings.layout }}">
+      <h3 class="velaHomeTitle"><span>{{ section.settings.title }}</span></h3>
+        <div class="velaContent proList--trending proList grid">
+            <div class="row">
+                {% for product in collections[proCollection].products limit:5 %}
+                    {% assign proImageSize = "263x263" %}
+                    {% if forloop.index == 1 %}
+                        <div class="col-xs-12 col-sm-12 col-md-3">
+                            {% include 'product-grid-item' %}
+                        {% if forloop.last %}
+                            </div>
+                        {% endif %}
+                    {% elsif forloop.index == 2 %}
+                            {% include 'product-grid-item' %}
+                        </div>
+                    {% elsif forloop.index == 3 %}
+                        <div class="col-xs-12 col-sm-12 col-md-6 itemSpecial">
+                            {% include 'product-grid-item' %}
+                        </div>
+                    {% elsif forloop.index == 4 %}
+                        <div class="col-xs-12 col-sm-12 col-md-3">
+                            {% include 'product-grid-item' %}
+                        {% if forloop.last %}
+                            </div>
+                        {% endif %}
+                    {% elsif forloop.index == 5 %}
+                            {% include 'product-grid-item' %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            {% if section.settings.readmore != blank and collections[proCollection].all_products_count > 5 %}
+               <div class="text-center"> <a class="readmore btn btn-special" href="{{ collections[proCollection].url }}" title="{{ section.settings.readmore }}" >{{ section.settings.readmore }}</a></div>
+            {% endif %}
+        </div>
+  	</div>
+</div>
+{% schema %}
+{
+	"name": "Vigor Products Trending",
+	"class": "VigorFramework vigorFramework",
+	"settings":[
+		{
+          	"type": "header",
+          	"content": "General Settings"
+        },
+		{
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "placeholder": "Title of section"
+        },
+        {
+            "type": "collection",
+            "id": "collection_handle",
+            "label": "Collection"
+        },
+        {
+            "type": "text",
+            "id": "readmore",
+            "label": "Read More"
+        }
+	],
+	"presets": [
+        {
+            "name": "Vigor Products List Trending",
+            "category": "Product",
+            "settings": {
+                "title": "Product List",
+                "collection_handle": "frontpage"
+            }
+        }
+    ]
+}
+{% endschema %}

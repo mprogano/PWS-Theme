@@ -1,0 +1,97 @@
+<div class="vigor-teamMember">
+    {% if section.settings.title != blank %}
+        <h3 class="velaHomeTitle">{{ section.settings.title }}</h3>
+    {% endif %}
+    	 {% if section.settings.desc_heading != blank %}
+                <div class="decs-block text-center">{{ section.settings.desc_heading }}</div>
+      {% endif %}
+    <div class="velaContent flexBox-top flexBox-row">
+        {% for block in section.blocks %}
+                <div class="team-item colvigor {{ section.settings.colvigor }}">
+                    {% if block.settings.avatar != blank %}
+                        <div class="Team-image">
+                            <img class="img-responsive" 
+                                 src="{{ block.settings.avatar | img_url:'500x500' }}" 
+                                 alt="{{ block.settings.avatar.alt | default: block.settings.name }}">
+                        </div>
+                    {% endif %}
+                     {% if block.settings.name != blank %}
+                        <h4 class="team-name text-center">{{ block.settings.name }}</h4>
+                    {% endif %}
+                    {% if block.settings.description != blank %}
+                        <div class="Team-description text-center">
+                            {{ block.settings.description }}
+                        </div>
+                   {% endif %}
+                </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% schema %}
+    {
+        "name": "Team Member",
+		"max_blocks": 5,
+        "settings":[
+            {
+                "type": "header",
+                "content": "Images"
+            },
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Title",
+                "placeholder": "Title of section"
+            },
+            {
+                "type": "text",
+                "id": "desc_heading",
+                "label": "Description",
+ 				"default": "vitae ultrices lacus purus vitae metus."
+            },
+            {
+              "type": "select",
+              "id": "colvigor",
+              "label": "Images per row",
+              "default": "colvigor5",
+              "options": [
+                {
+                  "value": "colvigor3",
+                  "label": "3"
+                },
+                {
+                  "value": "colvigor4",
+                  "label": "4"
+                },
+                {
+                  "value": "colvigor5",
+                  "label": "5"
+                }
+              ]
+            }
+        ],
+		"blocks": [
+			{
+                "type": "item",
+                "name": "Team Member Item",
+                "settings": [
+					{
+                        "type": "image_picker",
+                        "id": "avatar",
+                        "label": "Avatar"
+                    },
+                    {
+                        "type": "text",
+                        "id": "name",
+                        "label": "Team Name"
+                    },
+                    {
+                        "type": "textarea",
+                        "id": "description",
+                        "label": "Team description"
+                    }
+                ]
+            }
+		]
+    }
+{% endschema %}

@@ -1,0 +1,220 @@
+{% assign intProColumns = section.settings.collection_product_columns | plus:0 %}
+{% assign intProPaginate = section.settings.collection_product_page | plus:0 %}
+{% assign strColumn = 12 | divided_by:intProColumns %}
+{% if intProColumns == 5 %}
+    {% capture strGridItem %}col-sp-12 col-md-2-4{% endcapture %}
+{% else %}
+    {% capture strGridItem %}col-sp-12 col-xs-6 col-md-{{ strColumn }}{% endcapture %}
+{% endif %}
+{% unless collectionLayout %}
+	{%- assign collectionLayout = 'grid' -%}
+{% endunless %}
+{% if template == "collection.list" %}
+	{% include 'vela-collection-list' %}
+{% else %}
+	{% include 'vela-collection-grid' %}
+{% endif %}
+{% schema %}
+  {
+    "name": "Vigor Collection Page",
+	"max_blocks": 10,
+    "settings": [
+      {
+        "type": "header",
+        "content": "Settings"
+      },
+	  {
+        "type": "checkbox",
+        "id": "full-width",
+        "label": " *Enable Full width",
+		"info" : " Use when Hidden the sidebar"
+      },
+      {
+        "type": "checkbox",
+        "id": "collection_image",
+        "label": "Use Collection Image?"
+      },
+      {
+        "type": "text",
+        "id": "collection_product_columns",
+        "label": "Number of products in a row",
+        "placeholder": "Example: 4",
+        "default": "4"
+      },
+      {
+        "type": "text",
+        "id": "collection_product_page",
+        "label": "Number of products in a Page",
+        "placeholder": "Example: 12",
+        "default": "12"
+      },
+      {
+          "type": "header",
+          "content": "Collection Image"
+      },
+	  {
+        "type": "checkbox",
+        "id": "list__collection_enable",
+        "label": "list collection enable ?"
+      },
+      {
+          "type": "text",
+          "id": "heading_list_collection",
+          "label": "Title",
+          "placeholder": "Title of section"
+      }
+    ],
+	"blocks": [
+			{
+                "type": "item",
+                "name": "Banner Item",
+                "settings": [
+                {
+                  "type": "select",
+                  "id": "colvigor",
+                  "label": "Setting column Images Destop",
+                  "options": [
+                        {
+                          "value": "1",
+                          "label": "1\/12 (8.33%)"
+                        },
+                        {
+                          "value": "2",
+                          "label": "2\/12 (16.67%)"
+                        },
+                        {
+                          "value": "3",
+                          "label": "3\/12 (25.00%)"
+                        },
+                        {
+                          "value": "4",
+                          "label": "4\/12 (33.33%)"
+                        },
+                        {
+                          "value": "5",
+                          "label": "5\/12 (41.67%)"
+                        },
+                        {
+                          "value": "6",
+                          "label": "6\/12 (50.00%)"
+                        },
+                        {
+                          "value": "7",
+                          "label": "7\/12 (58.33%)"
+                        },
+                        {
+                          "value": "8",
+                          "label": "8\/12 (66.67%)"
+                        },
+                        {
+                          "value": "9",
+                          "label": "9\/12 (75.00%)"
+                        },
+                        {
+                          "value": "10",
+                          "label": "10\/12 (83.33%)"
+                        },
+                        {
+                          "value": "11",
+                          "label": "11\/12 (91.67%)"
+                        },
+                        {
+                          "value": "12",
+                          "label": "12\/12 (100.00%)"
+                        }
+                       ]
+                    },
+                {
+                  "type": "select",
+                  "id": "colvigor_mobile",
+                  "label": "Setting column Images Mobile",
+                  "options": [
+                        {
+                          "value": "1",
+                          "label": "1\/12 (8.33%)"
+                        },
+                        {
+                          "value": "2",
+                          "label": "2\/12 (16.67%)"
+                        },
+                        {
+                          "value": "3",
+                          "label": "3\/12 (25.00%)"
+                        },
+                        {
+                          "value": "4",
+                          "label": "4\/12 (33.33%)"
+                        },
+                        {
+                          "value": "5",
+                          "label": "5\/12 (41.67%)"
+                        },
+                        {
+                          "value": "6",
+                          "label": "6\/12 (50.00%)"
+                        },
+                        {
+                          "value": "7",
+                          "label": "7\/12 (58.33%)"
+                        },
+                        {
+                          "value": "8",
+                          "label": "8\/12 (66.67%)"
+                        },
+                        {
+                          "value": "9",
+                          "label": "9\/12 (75.00%)"
+                        },
+                        {
+                          "value": "10",
+                          "label": "10\/12 (83.33%)"
+                        },
+                        {
+                          "value": "11",
+                          "label": "11\/12 (91.67%)"
+                        },
+                        {
+                          "value": "12",
+                          "label": "12\/12 (100.00%)"
+                        }
+                       ]
+                    },
+                    {
+                        "type": "text",
+                        "id": "marginbanner",
+                        "label": "Margin baner",
+                        "placeholder": "Exp: 30px 30px 30px 30px"
+                    },
+                    {
+                        "type": "text",
+                        "id": "image_size",
+                        "label": "Image Size",
+                        "info": "Image Size is required."
+                    },
+                    {
+                        "type": "url",
+                        "id": "link",
+                        "label": "Image Link"
+                    },
+                    {
+                        "type": "image_picker",
+                        "id": "image",
+                        "label": "Banner Image"
+                    },
+                    {
+                        "type": "text",
+                        "id": "heading",
+                        "placeholder": "Title for Block",
+                        "label": "Title"
+                    },
+                    {
+                        "type": "text",
+                        "id": "desc",
+                        "placeholder": "Description for Block",
+                        "label": "Description"
+                    }
+                ]
+            }
+		]
+  }
+{% endschema %}

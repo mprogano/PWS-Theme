@@ -1,0 +1,13 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+<link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,600,700,800,900" rel="stylesheet">
+{% if settings.vela_fontfamily_style == 'google_fonts' %}
+	<link href="https://fonts.googleapis.com/css?family={{ settings.vela_fontfamily }}:100,300,400,500,700" rel="stylesheet" type="text/css">
+{% endif %}
+{% if settings.vela_fontfamily_secondary_style == 'google_fonts' %}
+	<link href="https://fonts.googleapis.com/css?family={{ settings.vela_fontfamily_secondary }}:100,300,400,500,700" rel="stylesheet" type="text/css">
+{% endif %}
+{% if settings.vela_fontfamily_tertiary_style == 'google_fonts' %}
+	<link href="https://fonts.googleapis.com/css?family={{ settings.vela_fontfamily_tertiary }}:100,300,400,500,700" rel="stylesheet" type="text/css">
+{% endif %}
+{{ 'vela-fonts.scss.css' | asset_url | stylesheet_tag }}
+{{ 'vela-site.scss.css' | asset_url | stylesheet_tag }}

@@ -1,0 +1,77 @@
+<div class="banner-deal" style="background-image:url({{ section.settings.image | img_url: '1920x' }});">
+	<div class="{% if settings.container_enable %} container {% else %} banner-Deal-full{% endif %} content-deal">
+      {% if section.settings.title != blank %}  
+      <h3 class="title_banner_deal"><span>{{ section.settings.title }}</span></h3>
+     {% if section.settings.desc != blank %}
+                <div class="decs-block text-center">{{ section.settings.desc }}</div>
+      {% endif %}
+      {% endif %}
+      	{% if section.settings.countdown_timeend !=blank %}
+            <div class="productCountdown">
+              	{% assign countdownTime = section.settings.countdown_timeend %}
+              	<div class="coundownWrapper" data-countdown="{{ countdownTime }}"></div>
+            </div>
+        {% endif %}
+      	<a href="{{ section.settings.link_redmore }}" class="btn btn-redmore">{{ section.settings.text_redmore }}</a>
+  	</div>
+</div>
+
+{% schema %}
+{
+	"name": "Vigor Banner Deal",
+	"class": "velaFramework mb-3",
+	"settings":[
+		{
+          	"type": "header",
+          	"content": "Banner countdown"
+        },
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Banner Image"
+        },
+        {
+            "type": "text",
+            "id": "countdown_timeend",
+            "label": "Time end",
+            "placeholder": "YYYY\/MM\/DD",
+            "info": "Format: 'Year\/Month\/Day'. Example: '2017\/01\/30'"
+        },
+		{
+          	"type": "header",
+          	"content": "General Settings"
+        },
+		{
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "placeholder": "Title of section"
+        },
+        {
+            "type": "text",
+            "id": "desc",
+            "placeholder": "Description for Block",
+            "label": "Description",
+			"default": "vitae ultrices lacus purus vitae metus."
+        },
+		{
+            "type": "text",
+            "id": "text_redmore",
+            "label": "title redmore",
+			"placeholder": "redmore"
+        },
+		{
+            "type": "url",
+            "id": "link_redmore",
+            "label": "Link redmore"
+        }
+	    
+	],
+	"presets": [
+        {
+            "name": "Vigor Vigor Banner Deal",
+            "category": "Image"
+        }
+    ]
+}
+{% endschema %}

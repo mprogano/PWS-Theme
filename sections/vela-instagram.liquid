@@ -1,0 +1,131 @@
+<div class="{% if section.settings.container_enable %}velaInstagram-full{% else %}container{% endif %}">
+    <div class="velaInstagram">
+      	<div class="{% if section.settings.container_enable %}container{% else %}top_block{% endif %}">
+            {% if section.settings.title != blank %}
+                <h4 class="velaHomeTitle none-before"><span>{{ section.settings.title }}</span></h4>
+            {% endif %}
+            {% if section.settings.desc != blank %}
+                    <div class="decs-block text-center">{{ section.settings.desc }}</div>
+            {% endif %}
+        </div>
+        <div class="velaContent">
+            <div class="row-instagram"><div id="velaInstagram{{ section.id }}" class="clearfix block_instagram"></div></div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+	    var feed = new Instafeed({
+		clientId: '{{ section.settings.clientid }}',
+        get: 'user',
+        userId: '{{ section.settings.userid }}',
+        accessToken: '{{ section.settings.accessToken }}',
+        target: 'velaInstagram{{ section.id }}',
+        limit: '{{ section.settings.limited }}',
+        resolution: '{{ section.settings.resolution }}',
+        {% raw %}template: '<div class="itemIns"><a target="_blank" href="{{link}}" title="{{caption}}"><img class="img-responsive" alt="{{caption}}" src="{{image}}" /></a></div>',{% endraw %}
+        before: function() {},
+        after: function() {
+          	if ($(window).width() <= 768){
+              $('#velaInstagram{{ section.id }}').owlCarousel({
+                  items : 9,
+                  lazyLoad : true,
+                  slideSpeed : 1000,
+                  paginationSpeed : 800,
+                  rewindSpeed : 1000,
+                  autoPlay: 10000,
+                  itemsTablet: [768, 4],
+                  itemsTabletSmall: [480, 3],
+                  itemsMobile: [360, 2],
+                  navigation : true
+              });
+            }
+        },
+        success: function() {},
+        error: function() {}
+    });
+  feed.run();
+  });
+</script>
+{% schema %}
+    {
+        "name": "Vigor Instagram",
+        "class": "Vigor",
+        "settings": [
+            {
+              "type": "checkbox",
+              "id": "container_enable",
+              "label": "Full width Enable?",
+              "default": true
+            },
+            {
+                "type": "text",
+                "id": "title",
+                "placeholder": "Title for Block",
+                "label": "Title"
+            },
+	        {
+                "type": "text",
+                "id": "desc",
+                "placeholder": "Description for Block",
+                "label": "Description"
+            },
+            {
+                "type": "text",
+                "id": "clientid",
+                "placeholder": "Required",
+                "label": "Client Id (*)",
+                "default": "ad4984d48a094264b3679c68d7f1c259",
+                "info": "[Where do I find Client ID?](http:\/\/darkwhispering.com\/how-to\/get-a-instagram-client_id-key)"
+            },
+			{
+                "type": "text",
+                "id": "userid",
+                "label": "User Id (*)",
+                "placeholder": "User Id",
+                "default": "3313174437",
+                "info": "Required when Get Image from: 'User'. [Where do I find User ID and Access Token?](http:\/\/www.pinceladasdaweb.com.br\/instagram\/access-token\/)"
+            },
+            {
+                "type": "text",
+                "id": "accessToken",
+                "label": "Access Token (*)",
+                "placeholder": "Access Token",
+                "default": "3313174437.1677ed0.69792fa67b60440999e3aea07b8e0116",
+                "info": "Required when Get Image from: 'User'."
+            },
+            {
+                "type": "text",
+                "id": "limited",
+                "placeholder": "Ex:8",
+                "label": "Limit The Number of Images",
+                "default": "8"
+            },
+			{
+                "type": "select",
+                "id": "resolution",
+                "label": "Resolution of images",
+                "options": [
+                    {
+                      	"value": "thumbnail",
+                      	"label": "Thumbnail (150x150)"
+                    },
+                    {
+                      	"value": "low_resolution",
+                      	"label": "Low Resolution (320x320)"
+                    },
+                    {
+                      	"value": "standard_resolution",
+                      	"label": "Standard Resolution (640x640)"
+                    }
+                ]
+            }
+        ],
+		"presets": [
+            {
+                "name": "Vigor Instagram",
+                "category": "Vigor Image"
+            }
+        ]
+    }
+{% endschema %}

@@ -1,0 +1,88 @@
+<div class="col-xs-12 col-sm-12 col-md-9 {% if section.settings.full-width %}col-sm-12 col-md-12{% endif %}">
+    <div class="blogContainer">
+        {% if current_tags %}
+            <h1 class="velaBlogTitle">{{ blog.title | link_to: blog.url }} &mdash; {{ current_tags.first }}</h1>
+        {% else %}
+            <h1 class="velaBlogTitle">{{ blog.title }}</h1>
+        {% endif %}
+        <div class="blogListArticle flexBox-top flexBox-row">
+            {% paginate blog.articles by 6 %}
+                {% for article in blog.articles %}
+                    {% assign imageSize = 'master' %}
+                    <div class=" col-xs-12 col-sm-6 {% if section.settings.full-width %}col-md-4{% endif %}">
+                        <div class="blogArticle">
+                            <div class="articleImage">
+                                    <a href="{{ article.url }}"><img class="img-responsive" src="{{ article.image | img_url: imageSize }}" alt="{{ article.title }}" /></a>
+                            </div>
+                            <div class="articleMeta">
+                                 <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+                                    {{ article.published_at | date: '<span>%d</span> %b' }}
+                                </time>
+                            </div>
+                            <h3><a href="{{ article.url }}">{{ article.title }}</a></h3>
+                            {% if section.settings.blog_meta_enable %}
+                                <div class="align-items top_rte">
+                                    <span class="article__author"><i class="ti-user"></i>{{ article.author }}</span>
+                                    <a class="comment" href="{{ article.url }}#Comments">
+                                      <i class="ti-comment-alt"></i>{{ 'blogs.comments.comments_with_count' | t: count: article.comments_count }}
+                                    </a>
+                                </div>
+                            {% endif %}
+                            {% if section.settings.blog_desc_enable %}
+                                <div class="rte">
+                                    {% if article.excerpt.size > 0 %}
+                                        {{ article.excerpt }}
+                                    {% else %}
+                                        <p>{{ article.content | strip_html | truncatewords: 20 }}</p>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                            {% if section.settings.blog_btnmore_enable %}
+                                <p><a class="articleBtnMore btn" href="{{ article.url }}">{{ 'blogs.article.read_more' | t }}</a></p>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+                {% if paginate.pages > 1 %}
+                    {% include 'vela-pagination' %}
+                {% endif %}
+            {% endpaginate %}
+        </div>
+    </div>
+</div>
+{% schema %}
+  {
+    "name": "Vigor Page Blog List",
+    "settings": [
+        {
+            "type": "header",
+            "content": "Settings page Blog"
+        },
+        {
+          "type": "checkbox",
+          "id": "full-width",
+          "label": " *Enable Full width",
+          "info" : " Use when Hidden the sidebar"
+        },
+        {
+            "type": "header",
+            "content": "Blog Item Settings"
+        },
+        {
+            "type": "checkbox",
+            "id": "blog_desc_enable",
+            "label": "Enable description Blog ?"
+        },
+        {
+            "type": "checkbox",
+            "id": "blog_meta_enable",
+            "label": "Enable Meta Blog ?"
+        },
+        {
+            "type": "checkbox",
+            "id": "blog_btnmore_enable",
+            "label": "Enable button redmore Blog ?"
+        }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,24 @@
+{% if section.settings.mentopbar_enable %}
+
+	<div class="menTopbar showMd hidden-xs hidden-sm">
+        <ul class="linkTop">
+            {% assign menTopbar = section.settings.mentopbar_links %}
+            {% for itemMenu in linklists[menTopbar].links %}
+                <li><a href="{{ itemMenu.url }}" title="">{{ itemMenu.title }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>	
+
+    <div class="menTopbar groupBt userInfo hidden-lg hidden-md">
+        <div class="topLinksTitle" data-toggle="dropdown">
+            <i class="zmdi zmdi-more-vert zmdi-hc-fw"></i>
+        </div>
+        <ul class="dropdown-menu list-unstyled">
+            {% assign menTopbar = section.settings.mentopbar_links %}
+            {% for itemMenu in linklists[menTopbar].links %}
+                <li><a href="{{ itemMenu.url }}" title="">{{ itemMenu.title }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+	
+{% endif %}

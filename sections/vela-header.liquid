@@ -1,0 +1,135 @@
+<header id="vigor--Header" class="vigor--Header">
+    <section class="headerWrap">
+        <div id="Header--Main">
+            <div class="container">
+                <div class="headerContent align-items">
+                    <div class="headerLeft align-items col-custom-3">
+                      {% if section.settings.wg-storetop_enable %}
+							{% include 'store-top' %}
+                      {% endif %}
+                      {% if section.settings.wg-contactinfo_enable %}
+							{% include 'contact-info' %}
+                      {% endif %}
+                    </div>
+                    <div class="headerCenter col-custom-6">
+      
+                        {% if template == 'index' %}
+                            <h1 class="vigorLogo" itemscope itemtype="http://schema.org/Organization">
+                        {% else %}
+                            <div class="vigorLogo" itemscope itemtype="http://schema.org/Organization">
+                        {% endif %}
+                        {% if section.settings.logo_use_image %}
+                            <a href="/" itemprop="url" class="LogoLink">
+                              	{% capture image_size %}{{ section.settings.logo_max_width }}x{% endcapture %}
+                                <img src="{{ section.settings.logo | img_url: image_size }}"
+                               	srcset="{{ section.settings.logo | img_url: image_size }} 1x, {{ section.settings.logo | img_url: image_size, scale: 2 }} 2x"
+                               	alt="{{ section.settings.logo.alt | default: shop.name }}"
+                               	itemprop="logo">
+                            </a>
+                        {% else %}
+                            <a href="/" itemprop="url">{{ shop.name }}</a>
+                        {% endif %}
+                        {% if template != 'index' %}
+                            </div>
+                        {% else %}
+                            </h1>
+                        {% endif %}
+                    </div>
+                    <div class="headerRight col-custom-3">
+                        <div class="pull-right align-items">
+                          	<div class="menuBtnMobile hidden-lg hidden-md">
+                                <div id="btnMenuMobile" class="btnMenuMobile">
+                                    <i class="zmdi zmdi-menu"></i>
+                                </div>
+                            </div>
+                            {% include 'vela-searchtop' %}
+                            {% include 'vela-carttop' %}
+                            <div class="groupBt Topbar inline-block"> 
+                                <a class="titleGroup" data-toggle="dropdown"><i class="zmdi zmdi-more icon"></i></a>
+                                <div class="dropdown-menu">
+                                    {% include 'vela-toplinks' %}
+                                </div>
+                            </div>
+                        </div>
+                   </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</header>
+{% schema %}
+	{
+      	"name": "Header",
+      	"settings": [
+            {
+              "type": "header",
+              "content": "Stores"
+            },
+            {
+                "type": "checkbox",
+                "id": "wg-storetop_enable",
+                "label": "Enable Store ?"
+            },
+            {
+                "type": "text",
+                "id": "linkstore",
+                "label": "Store Link"
+            },
+            {
+              "type": "text",
+              "id": "store_title",
+              "placeholder": "Title for stores",
+              "label": "Stores Title"
+            },
+			{
+              "type": "header",
+              "content": "Hotline"
+            },
+            {
+                "type": "checkbox",
+                "id": "wg-contactinfo_enable",
+                "label": "Enable Hotline ?"
+            },
+            {
+              "type": "text",
+              "id": "contact_info",
+              "label": "HOT LINE"
+            },
+            {
+                "type": "header",
+                "content": "Logo"
+            },
+            {
+                "type": "checkbox",
+                "id": "logo_use_image",
+                "label": "Use custom logo"
+            },
+            {
+                "type": "image_picker",
+                "id": "logo",
+                "label": "Logo image"
+            },
+            {
+              "type": "text",
+              "id": "logo_max_width",
+              "label": "Custom logo width (in pixels)",
+              "default": "152"
+            },
+			{
+                "type": "header",
+                "content": "Topbar"
+            },
+            {
+                "type": "text",
+                "id": "topbar_toplinks_title",
+                "placeholder": "Title for Block",
+                "label": "Block Title"
+            },
+            {
+                "type": "link_list",
+                "id": "topbar_toplinks",
+                "label": "Topbar Menu"
+            }
+        ]
+    }
+{% endschema %}

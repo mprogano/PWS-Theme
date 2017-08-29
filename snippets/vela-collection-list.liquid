@@ -1,0 +1,69 @@
+<div id="proListCollection" class="col-xs-12 col-sm-12 col-md-9 {% if section.settings.full-width %} col-md-12 {% endif %}">
+    {% if section.settings.list__collection_enable %}
+      <div class="list__collection">
+          {% if section.settings.heading_list_collection != blank %}
+              <h3 class="heading_list_collection">{{ section.settings.heading_list_collection }}</h3>
+          {% endif %}
+          <div class="vigor-banner row collection-banner">
+              {% for block in section.blocks %}
+                 <div class="col-sp-12 col-xs-{{ block.settings.colvigor_mobile }} col-sm-{{ block.settings.colvigor }} col-md-{{ block.settings.colvigor }}">
+                    <div class="lookbook-item" style="margin:{{ block.settings.marginbanner }};">
+                         <a class="image-vigor" href="{{ block.settings.link }}" title="{{ block.settings.heading }}" style="background-image:url({{ block.settings.image | img_url: '2000x' }});">
+                              {% if block.settings.image != blank %}
+                                  <img class="img-responsive" alt="{{ block.settings.heading }}" src="{{ block.settings.image | img_url: '2000x' }}" />
+                              {% else %}
+                                  <img class="img-responsive" alt="{{ shop.name }}" src="http://placehold.it/{{ block.settings.image_size }}" />
+                              {% endif %}
+                          </a>
+                          {% if block.settings.heading != blank %}
+                              <h3 class="heding-lookbook text-center"><a href="{{ block.settings.link }}" title="{{ block.settings.heading }}">{{ block.settings.heading }}</a></h3>
+                          {% endif %}
+                          {% if block.settings.desc != blank %}
+                              <div class="decs-banner text-center">{{ block.settings.desc }}</div>
+                          {% endif %}
+                    </div>
+                 </div>
+              {% endfor %}
+          </div>
+      </div>
+    {% endif %} 
+	<div class="collBoxTop">
+        {% if section.settings.collection_image %}
+            {% if collection.image %}
+                <div class="collImage" style="background-image: url('{{ collection.image | collection_img_url: 'master' }}')">
+                </div>
+            {% endif %}
+        {% endif %}
+        {% if collection.description != blank %}
+            <div class="rte rteHeader">
+              	<h3 class="headerCollection">{{ collection.title }}</h3>
+                {{ collection.description }}
+            </div>
+        {% endif %}
+    </div>
+    <div class="collBoxSort">
+        {% include 'collection-sorting' %}
+    </div>
+    {% paginate collection.products by intProPaginate %}
+        <div class="collBoxProducts">
+            <div id="velaProList" class="proList list">
+                {% for product in collection.products %}
+                    <div class="row">
+                        {% include 'product-list-item' with 'col-xs-12' %}
+                    </div>
+                {% else %}
+                    <div class="collNoProduct">
+                        <div class="alert alert-warning">
+                            <strong>{{ 'collections.general.no_matches' | t }}</strong>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% if paginate.pages > 1 %}
+            <div id="collPagination">
+                {% include 'vela-pagination' %}
+            </div>
+        {% endif %}
+    {% endpaginate %}
+</div>

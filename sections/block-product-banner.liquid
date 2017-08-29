@@ -1,0 +1,359 @@
+<div {% if section.settings.layout-full == 'full-width' %}class="full-width block__prouduct__banner" {% else section.settings.layout-full == 'boxed'%}class="container block__prouduct__banner"{% endif %}>
+  	<div {% if section.settings.layout-full == 'full-width' %}class="clearfix no-padding" {% else section.settings.layout-full == 'boxed'%}class="row"{% endif %}>
+      <div class="flex-display"> 
+          {% capture image_layout %}
+              <div class="vigor-banner flex-width">
+                    <div class="lookbook-item">
+                         <a class="image-vigor banner_effect" href="{{ section.settings.link }}" title="{{ section.settings.heading }}" style="background-image:url({{ section.settings.image | img_url: '2000x' }});">
+                              {% if section.settings.image != blank %}
+                                  <img style="opacity:0" class="img-responsive" alt="{{ section.settings.heading }}" src="{{ section.settings.image | img_url: '2000x' }}" />
+                              {% else %}
+                                  <img style="opacity:0" class="img-responsive" alt="{{ shop.name }}" src="http://placehold.it/{{ section.settings.image_size }}" />
+                              {% endif %}
+                          </a>
+                          {% if section.settings.heading != blank %}
+                              <h3 class="heding-lookbook text-center"><a href="{{ section.settings.link }}" title="{{ section.settings.heading }}">{{ section.settings.heading }}</a></h3>
+                          {% endif %}
+                    </div>
+              </div>	
+          {% endcapture %}
+          {% if section.settings.layout_img == 'left' %}
+              <div class="left-cloumn col-sp-12 col-xs-12 col-sm-12 col-md-6 pull-{{ section.settings.layout_img }}"> 
+                  {{ image_layout }}
+               </div>
+          {% endif %}
+          <div class="col-sp-12 col-xs-12 col-sm-12 col-md-6 productBlock"> 
+              <div class="right-cloumn flex-width">
+                  {%- assign proCollection = section.settings.collection_handle -%}
+                  {%- assign proColumn1 = section.settings.column1 | plus:0 -%}
+                  {%- assign proColumn2 = section.settings.column2 | plus:0 -%}
+                  {%- assign proColumn3 = section.settings.column3 | plus:0 -%}
+                  {%- assign proColumn4 = section.settings.column4 | plus:0 -%}
+                  {%- assign proRow = section.settings.row | plus:0 -%}
+                  {%- assign proLimit = section.settings.limit | plus:0 -%}
+                  <div id="proList{{ section.id }}" class="velaProducts {{ section.settings.layout }}">
+                    {% if section.settings.title != blank %}  
+                    <h3 class="velaHomeTitle"><span>{{ section.settings.title }}</span></h3>
+                    {% endif %}	
+                    {% if section.settings.desc != blank %}
+                              <div class="decs-block text-left">{{ section.settings.desc }}</div>
+                    {% endif %}
+                      <div class="velaContent">
+                          <div class="proSlickCarousel proList grid">
+                              <div class="slickCarousel" data-slick='{"slidesToShow": {{ proColumn1 }},
+                                                                     "slidesToScroll": 1,
+                                                                     "rows": {{ proRow }},     
+                                                                     "arrows": {{ section.settings.navigation }},
+                                                                     "infinite": {{ section.settings.infinite }},
+                                                                     "autoplay": {{ section.settings.autoplay }},
+                                                                     "autoplaySpeed": {{ section.settings.autoplay_speed }},
+                                                                     "speed": {{ section.settings.speed }},
+                                                                     "swipeToSlide": true}'
+                                                          data-columnone="{{ proColumn1 }}"
+                                                          data-columntwo="{{ proColumn2 }}"
+                                                          data-columnthree="{{ proColumn3 }}"
+                                                          data-columnfour="{{ proColumn4 }}">
+                                  {% for product in collections[proCollection].products limit:proLimit %}
+                                      <div class="item">
+                                          {% assign proImageSize = "263x263" %}
+                                          {% include 'product-grid-item' %}
+                                      </div>
+                                  {% endfor %}
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+                {% if section.settings.layout_img == 'right' %}
+                    <div class="left-cloumn col-sp-12 col-xs-12 col-sm-12 col-md-6 pull-{{ section.settings.layout_img }}"> 
+                  			{{ image_layout }}
+                    </div>
+                {% endif %}
+        </div>
+  	</div>
+</div>
+{% schema %}
+{
+	"name": "Vigor Products - Banner",
+	"class": "vigor",
+	"settings":[
+		{
+          	"type": "header",
+          	"content": "Banner Settings"
+        },
+        {
+            "type": "select",
+            "id": "layout-full",
+            "label": "Layout banner",
+            "default": "boxed",
+            "options": [
+              {
+                "value": "full-width",
+                "label": "Full Width"
+              },
+              {
+                "value": "boxed",
+                "label": "Boxed"
+              }
+            ]
+           },
+          {
+            "type": "select",
+            "id": "layout_img",
+            "label": "Layout",
+            "default": "left",
+            "options": [
+              {
+                "value": "left",
+                "label": "Image on left"
+              },
+              {
+                "value": "right",
+                "label": "Image on right"
+              }
+            ]
+          },
+        {
+            "type": "text",
+            "id": "image_size",
+            "label": "Image Size",
+            "info": "Image Size is required."
+        },
+        {
+            "type": "url",
+            "id": "link",
+            "label": "Image Link"
+        },
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Banner Image"
+        },
+        {
+            "type": "text",
+            "id": "heading",
+            "placeholder": "Title for Block",
+            "label": "Title"
+        },
+		{
+          	"type": "header",
+          	"content": "Product Settings"
+        },
+		{
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "placeholder": "Title of section"
+        },
+        {
+            "type": "text",
+            "id": "desc",
+            "placeholder": "Description for Block",
+            "label": "Description",
+			"default": "vitae ultrices lacus purus vitae metus."
+        },
+        {
+            "type": "collection",
+            "id": "collection_handle",
+            "label": "Collection"
+        },
+        {
+            "type": "select",
+            "id": "layout",
+            "label": "Select Layout",
+            "default": "layout-default",
+            "options":[
+            	{
+            		"value": "layout-default",
+                    "label": "Layout Default"
+            	}
+            ]
+        },
+        {
+            "type": "header",
+            "content": "Carousel Settings"
+        },
+        {
+            "type": "select",
+            "id": "column1",
+            "label": "#Column 1",
+            "default": "4",
+			"info": "Large desktops",
+            "options":[
+            	{
+            		"value": "1",
+                    "label": "1"
+            	},
+            	{
+            		"value": "2",
+                    "label": "2"
+            	},
+            	{
+            		"value": "3",
+                    "label": "3"
+            	},
+            	{
+            		"value": "4",
+                    "label": "4"
+            	},
+            	{
+            		"value": "5",
+                    "label": "5"
+            	}
+            ]
+        },
+		{
+            "type": "select",
+            "id": "column2",
+            "label": "#Column 2",
+            "default": "3",
+			"info": "Desktops & Tablets landscape",
+            "options":[
+            	{
+            		"value": "1",
+                    "label": "1"
+            	},
+            	{
+            		"value": "2",
+                    "label": "2"
+            	},
+            	{
+            		"value": "3",
+                    "label": "3"
+            	},
+            	{
+            		"value": "4",
+                    "label": "4"
+            	},
+            	{
+            		"value": "5",
+                    "label": "5"
+            	}
+            ]
+        },
+		{
+            "type": "select",
+            "id": "column3",
+            "label": "#Column 3",
+			"info": "Tablets & Phones landscape",
+            "default": "2",
+            "options":[
+            	{
+            		"value": "1",
+                    "label": "1"
+            	},
+            	{
+            		"value": "2",
+                    "label": "2"
+            	},
+            	{
+            		"value": "3",
+                    "label": "3"
+            	},
+            	{
+            		"value": "4",
+                    "label": "4"
+            	},
+            	{
+            		"value": "5",
+                    "label": "5"
+            	}
+            ]
+        },
+		{
+            "type": "select",
+            "id": "column4",
+            "label": "#Column 4",
+            "default": "2",
+			"info": "Smartphones",
+            "options":[
+            	{
+            		"value": "1",
+                    "label": "1"
+            	},
+            	{
+            		"value": "2",
+                    "label": "2"
+            	},
+            	{
+            		"value": "3",
+                    "label": "3"
+            	},
+            	{
+            		"value": "4",
+                    "label": "4"
+            	},
+            	{
+            		"value": "5",
+                    "label": "5"
+            	}
+            ]
+        },
+        {
+            "type": "select",
+            "id": "row",
+            "label": "Row",
+            "default": "1",
+            "options":[
+            	{
+            		"value": "1",
+                    "label": "1"
+            	},
+            	{
+            		"value": "2",
+                    "label": "2"
+            	}
+            ]
+        },
+        {
+            "type": "text",
+            "id": "limit",
+            "label": "Limit",
+            "default": "8"
+        },
+        {
+            "type": "checkbox",
+            "id": "navigation",
+            "label": "Show Navigation",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "infinite",
+            "label": "Active Infinite",
+            "default": false
+        },
+        {
+            "type": "checkbox",
+            "id": "autoplay",
+            "label": "Auto Play",
+            "default": false
+        },
+        {
+            "type": "text",
+            "id": "autoplay_speed",
+            "label": "Auto Play Speed",
+            "info": "Default: 10000(ms)",
+            "default": "10000"
+        },
+        {
+            "type": "text",
+            "id": "speed",
+            "label": "Speed",
+            "info": "Slide/Fade animation speed",
+            "default": "300"
+        }
+	],
+	"presets": [
+        {
+            "name": "Vigor Products - Banner",
+            "category": "Product",
+            "settings": {
+                "title": "Vigor Products - Bannert",
+                "collection_handle": "frontpage"
+            }
+        }
+    ]
+}
+{% endschema %}

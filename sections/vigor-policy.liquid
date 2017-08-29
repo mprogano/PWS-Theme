@@ -1,0 +1,80 @@
+<div class="container">
+    <div class="vigor-policy">
+        {% if section.settings.title != blank %}
+            <h3 class="velaHomeTitle">{{ section.settings.title }}</h3>
+        {% endif %}
+        <div class="velaContent align-items row">
+               {% for block in section.blocks %}
+               <div class="service-item">
+                 	<div class="item-service">
+                        <div class="service-box clearfix">
+                            {% if block.settings.policyhome_icon1 != blank %}
+                                <div class="icon-left"><i class="{{ block.settings.policyhome_icon1 }}"></i></div>
+                            {% endif %}
+                          <div class="service-heading">
+                            <h4>{{ block.settings.heading }} <span>{{ block.settings.desc }}</span></h4>
+                          </div>
+                        </div>
+                     </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% schema %}
+    {
+        "name": "Vigor Policy",
+        "class": "Vigor wp-policy",
+		"max_blocks": 4,
+        "settings":[
+            {
+                "type": "header",
+                "content": "General Settings"
+            },
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Title",
+                "placeholder": "Title of section"
+            }
+        ],
+		"blocks": [
+			{
+                "type": "item",
+                "name": "Policy Item",
+                "settings": [
+                    {
+                      "type": "text",
+                      "id": "policyhome_icon1",
+                      "label": "Font Icon Class",
+                      "info": "[Use font \"Material-Design-Iconic-Font\".](http://zavoloklom.github.io/material-design-iconic-font/icons.html)"
+                    },
+                    {
+                        "type": "text",
+                        "id": "heading",
+                        "label": "service Heading"
+                    },
+					{
+                        "type": "text",
+                        "id": "desc",
+                        "label": "Description Position"
+                    }
+                ]
+            }
+		],
+        "presets": [
+            {
+                "name": "Vigor Policy",
+                "category": "Vigor Policy",
+				"blocks": [
+                    {
+                        "type":"item"
+                    },
+                    {
+                        "type":"item"
+                    }
+                ]
+            }
+        ]
+    }
+{% endschema %}

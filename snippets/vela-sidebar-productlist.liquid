@@ -1,0 +1,45 @@
+{% if section.settings.sidebar_productlist_enable %}
+	{% assign itemLimit = section.settings.sidebar_productlist_limit | plus:0 %}
+	{% assign itemCollection = section.settings.sidebar_productlist_collection %}
+	<div class="sidebarProductList">
+		<h3 class="titleSidebar">{{ section.settings.sidebar_productlist_title }}</h3>
+		<div class="velaContent">
+			{% for product in collections[itemCollection].products limit:itemLimit %}
+				{% assign proImageSize = 'compact' %}
+				{% assign on_sale = false %}
+				{% if product.compare_at_price > product.price %}
+				    {% assign on_sale = true %}
+				{% endif %}
+				{% assign sold_out = true %}
+				{% if product.available %}
+				    {% assign sold_out = false %}
+				{% endif %}
+				<div class="velaProBlock">
+					<div class="row noGutter">
+						<div class="proHImage col-xs-3">
+					        <a class="proFeaturedImage" href="{{ product.url }}">
+					            <img class="img-responsive" alt="{{ product.featured_image.alt | escape }}" src="{{ product.featured_image | product_img_url:proImageSize }}" />
+					        </a>
+					    </div>
+					    <div class="proContent col-xs-9">
+					    	{% if settings.product_reviews_enable %}
+					            <div class="proReviews">
+					                <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+					            </div>
+					        {% endif %}
+					    	<h5 class="proName">
+					            <a href="{{ product.url }}">{{ product.title }}</a>
+					        </h5>
+					        <div class="proPrice">
+					            <div class="priceProduct priceSale">{{ product.price | money }}</div>
+					            {% if on_sale %}
+					                <div class="priceProduct priceCompare">{{ product.compare_at_price | money }}</div>
+					            {% endif %}
+					        </div>
+					    </div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endif %}

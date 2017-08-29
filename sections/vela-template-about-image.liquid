@@ -1,0 +1,84 @@
+<div class="vigor-banner-sale flexBox-top flexBox-row">
+    {% for block in section.blocks %}
+       <div class="colvigor {{ section.settings.colvigor }}">
+          <div class="lookbook-item">
+               <div class="image-vigor">
+                    {% if block.settings.image != blank %}
+                        <img class="img-responsive" alt="{{ block.settings.heading }}" src="{{ block.settings.image | img_url: '2000x' }}" />
+                    {% else %}
+                        <img class="img-responsive" alt="{{ shop.name }}" src="http://placehold.it/{{ block.settings.image_size }}" />
+                    {% endif %}
+                </div>
+                {% if block.settings.heading != blank %}
+                    <h4 class="heding-lookbook text-center">{{ block.settings.heading }}</h4>
+                {% endif %}
+                {% if block.settings.desc != blank %}
+                    <div class="decs-banner text-center">{{ block.settings.desc }}</div>
+                {% endif %}
+          </div>
+       </div>
+    {% endfor %}
+</div>
+{% schema %}
+    {
+        "name": "Image Top Page",
+		"max_blocks": 4,
+        "settings":[
+            {
+                "type": "header",
+                "content": "Images"
+            },
+            {
+              "type": "select",
+              "id": "colvigor",
+              "label": "Images per row",
+              "default": "colvigor3",
+              "options": [
+                {
+                  "value": "colvigor2",
+                  "label": "2"
+                },
+                {
+                  "value": "colvigor3",
+                  "label": "3"
+                },
+                {
+                  "value": "colvigor4",
+                  "label": "4"
+                }
+              ]
+            }
+        ],
+		"blocks": [
+			{
+                "type": "item",
+                "name": "Banner Item",
+                "settings": [
+                      {
+                          "type": "text",
+                          "id": "image_size",
+                          "label": "Image Size",
+                          "info": "Image Size is required."
+                      },
+                      {
+                          "type": "image_picker",
+                          "id": "image",
+                          "label": "Banner Image"
+                      },
+                      {
+                          "type": "text",
+                          "id": "heading",
+                          "placeholder": "Title for Block",
+                          "label": "Title"
+                      },
+                      {
+                          "type": "text",
+                          "id": "desc",
+                          "placeholder": "Description for Block",
+                          "label": "Description"
+                      }
+                ]
+            }
+		]
+    }
+{% endschema %}

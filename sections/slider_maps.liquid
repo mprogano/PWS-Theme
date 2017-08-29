@@ -1,0 +1,652 @@
+<section class="slide_maps {% if section.settings.container_enable %}full-width{% else %}container{% endif %}">
+  	<div class="{% if section.settings.container_enable %}clearfix no_padding{% else %}row{% endif %}">
+         {% capture image_layout %}
+              <div class="HomeContact mb-3">
+                  {% if section.settings.type == 'embed' %}
+                      <div class="velaGoogleMap">
+                          {% if section.settings.image3 != blank %}
+                              <img class="img-responsive" alt="{{ section.settings.image.alt | default: shop.name }}" src="{{ section.settings.image3 | img_url:'master' }}" />
+                          {% else %}
+                               <img style="opacity:0" class="img-responsive" alt="{{ shop.name }}" src="http://placehold.it/{{ section.settings.image_size3 }}" />
+                          {% endif %}
+                          {% if section.settings.googlemap_iframe != blank %}
+                              {{ section.settings.googlemap_iframe }}
+                          {% endif %}
+                      </div>
+                  {% else %}
+                      <div class="ImageMap">
+                          {% if section.settings.image != blank %}
+                              <img class="img-responsive" alt="{{ section.settings.image.alt | default: shop.name }}" src="{{ section.settings.image | img_url:'master' }}" />
+                          {% else %}
+                              <div class="NoImagePlaceholder">
+                                  <img class="img-responsive" alt="{{ shop.name }}" src="//placehold.it/300x300" />
+                              </div>
+                          {% endif %}
+                      </div>
+                  {% endif %}
+                	<div class="content_maps">
+                      	 <h4>{{ section.settings.headingmaps }}</h4>
+                		 {{ section.settings.content_maps }}
+                	</div>
+              </div>
+        {% endcapture %}
+        {% if section.settings.layout_img == 'left' %}
+            <div class="left-cloumn col-sp-12 col-xs-{{ section.settings.colvigor_mobile }} col-sm-{{ section.settings.colvigor_mobile }} col-md-{{ section.settings.colvigor }} pull-{{ section.settings.layout_img }}"> 
+                {{ image_layout }}
+            </div>
+        {% endif %}	
+        <div class="velaSlideshow mb-3 col-sp-12 col-xs-{{ section.settings.colvigor_mobile1 }} col-sm-{{ section.settings.colvigor_mobile1 }} col-md-{{ section.settings.colvigor1 }}">
+            <div data-section-id="{{ section.id }}" data-section-type="velaSlideshowSection">
+            {% if section.blocks.size > 0 %}
+                <div class="velaSlideshowWrapper">
+                    <button type="button" class="hidden btnssPause" data-id="{{ section.id }}">
+                        <span class="btnssPauseStop">
+                            <i class="fa fa-play"></i>
+                            <span class="iconText">{{ 'sections.slideshow.pause_slideshow' | t }}</span>
+                        </span>
+                        <span class="btnssPausePlay">
+                            <i class="fa fa-pause"></i>
+                            <span class="iconText">{{ 'sections.slideshow.play_slideshow' | t }}</span>
+                        </span>
+                    </button>
+                    <div id="velaSlideshows{{ section.id }}" class="slideshow" 
+                         data-autoplay="{{ section.settings.autoplay }}" 
+                         data-speed="{{ section.settings.autoplay_speed }}">
+                        {%- assign imageSize = section.settings.image_size -%}
+                        {% for block in section.blocks %}
+                            {%- assign is_background_video = false -%}
+                            {% if block.type == 'video' %}
+                                {% if block.settings.video_type == 'background' or block.settings.video_type =='background-chrome' %}
+                                    {%- assign is_background_video = true -%}
+                                {% endif %}
+                            {% endif %}
+                            <div class="velassSlide velassSlide{{ block.id }}{% if is_background_video %} velassSlideBackgroundVideo{% endif %}" {{ block.shopify_attributes }}>
+                                {% if block.settings.link != blank %}
+                                    <a href="{{ block.settings.link }}" class="velassLink">
+                                {% endif %}
+                                    {% if block.type == 'video' %}
+                                        {% if block.settings.video_id != blank %}
+                                            <div class="video-loader"></div>
+                                        {% endif %}
+                                        {% unless block.settings.video_type == 'background' %}
+                                            <button type="button" class="btnssVideoControl btnssVideoControlClose" data-controls="velassVideo{{ block.id }}">
+                                                <i class="icon zmdi zmdi-close-circle-o"></i>
+                                                <span class="iconText">{{ 'sections.slideshow.close_video' | t }}</span>
+                                            </button>
+                                        {% endunless %}
+                                        {% if block.settings.video_id != blank %}
+                                            <div id="velassVideo{{ block.id }}" class="velassVideo {% if is_background_video %}velassVideoBackground{% endif %} velassVideo-{{ block.settings.video_type }}"
+                                                data-id="{{ block.settings.video_id }}"
+                                                data-type="{{ block.settings.video_type }}"
+                                                data-slideshow="velaSlideshows{{ section.id }}"></div>
+                                        {% endif %}
+                                    {% endif %}
+                                    <div class="velassImage" data-image="{{ block.settings.image | img_url:1024 }}" style="background-image:url({{ block.settings.image | img_url: '2000x' }});">
+                                        {% if block.settings.image != blank %}
+                                            <img class="img-responsive" alt="{{ block.settings.image.alt | default: shop.name }}" src="{{ block.settings.image | img_url:imageSize }}" />
+                                        {% else %}
+                                            <div class="velassNoImagePlaceholder">
+                                                <img class="img-responsive" alt="{{ shop.name }}" src="//placehold.it/{{ imageSize }}" />
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="velassCaption">
+                                        <div class="velassCaptionContent {{ block.settings.alignment }}">
+                                            <div class="contentSlider">
+                                                {% unless block.settings.title == blank %}
+                                                    <h3 class="velaHomeTitle" style="color:{{ block.settings.title_color }};">
+                                                      	<span>{{ block.settings.title | escape }}</span>
+                                                    </h3>
+                                                {% endunless %}
+                                                {% unless block.settings.subheading == blank %}
+                                                    <p class="desc_slider" style="color:{{ block.settings.subheading_color }};">
+                                                        {{ block.settings.subheading }}
+                                                    </p>
+                                                {% endunless %}
+                                                {% unless block.settings.btn_text == blank %}
+                                                    <a class="btn btnVelaSlider btn-special" href="{{ block.settings.link }}">{{ block.settings.btn_text }}</a>
+                                                {% endunless %}
+                                                {% if block.type == 'video' %}
+                                                    {% unless block.settings.video_type == 'background' %}
+                                                        <div class="btnssVideoControlPlayWrap{% if block.settings.title != blank or block.settings.subheading != blank %} velassHasCaption{% endif %}">
+                                                          <a href="{{ block.settings.link2 }}" class="btn btn-Slider"><i class="zmdi zmdi-forward"></i>{{ block.settings.btn_text2 }}</a>
+                                                            <button type="button" class="btn btnssVideoControl btnssVideoControlPlay" data-controls="velassVideo{{ block.id }}">
+                                                                <i class="icon zmdi zmdi-play-circle-outline"></i>
+                                                                <span class="iconText">{{ 'sections.slideshow.play_video' | t }}</span>
+                                                            </button>
+                                                        </div>
+                                                    {% endunless %}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% if block.settings.link != blank %}
+                                    </a>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+            {% if section.blocks.size == 0 %}
+                <div class="placeholder-noblocks">
+                    {{ 'homepage.onboarding.no_content' | t }}
+                </div>
+            {% endif %}
+        </div>
+        </div>
+
+          {% if section.settings.layout_img == 'right' %}
+            <div class="col-sp-12 right-cloumn col-xs-{{ section.settings.colvigor_mobile }} col-sm-{{ section.settings.colvigor_mobile }} col-md-{{ section.settings.colvigor }} pull-{{ section.settings.layout_img }}"> 
+                    {{ image_layout }}
+            </div>
+        {% endif %}
+    </div>
+</section>
+{% schema %}
+{
+    "name": "Vigor Slideshow + Maps",
+    "class": "vigor border_top border_bottom block_slide_maps",
+    "max_blocks": 4,
+    "settings": [
+		{
+          "type": "checkbox",
+          "id": "container_enable",
+          "label": "Full Width Enable?",
+          "default": true
+        },
+		{
+          	"type": "header",
+          	"content": "Maps Settings"
+        },
+		{
+            "type": "text",
+            "id": "image_size3",
+            "label": "Maps Size",
+			"default": "555x268",
+        	"info": "[Size parameters](https://help.shopify.com/themes/liquid/filters/url-filters#size-parameters)"
+        },
+		{
+            "type": "select",
+            "id": "colvigor",
+            "label": "Setting column Images Destop",
+            "default": "4",
+            "options": [
+                  {
+                    "value": "1",
+                    "label": "1\/12 (8.33%)"
+                  },
+                  {
+                    "value": "2",
+                    "label": "2\/12 (16.67%)"
+                  },
+                  {
+                    "value": "3",
+                    "label": "3\/12 (25.00%)"
+                  },
+                  {
+                    "value": "4",
+                    "label": "4\/12 (33.33%)"
+                  },
+                  {
+                    "value": "5",
+                    "label": "5\/12 (41.67%)"
+                  },
+                  {
+                    "value": "6",
+                    "label": "6\/12 (50.00%)"
+                  },
+                  {
+                    "value": "7",
+                    "label": "7\/12 (58.33%)"
+                  },
+                  {
+                    "value": "8",
+                    "label": "8\/12 (66.67%)"
+                  },
+                  {
+                    "value": "9",
+                    "label": "9\/12 (75.00%)"
+                  },
+                  {
+                    "value": "10",
+                    "label": "10\/12 (83.33%)"
+                  },
+                  {
+                    "value": "11",
+                    "label": "11\/12 (91.67%)"
+                  },
+                  {
+                    "value": "12",
+                    "label": "12\/12 (100.00%)"
+                  }
+                 ]
+              },
+          	{
+            "type": "select",
+            "id": "colvigor_mobile",
+            "label": "Setting column Images Mobile",
+            "default": "12",
+            "options": [
+                  {
+                    "value": "1",
+                    "label": "1\/12 (8.33%)"
+                  },
+                  {
+                    "value": "2",
+                    "label": "2\/12 (16.67%)"
+                  },
+                  {
+                    "value": "3",
+                    "label": "3\/12 (25.00%)"
+                  },
+                  {
+                    "value": "4",
+                    "label": "4\/12 (33.33%)"
+                  },
+                  {
+                    "value": "5",
+                    "label": "5\/12 (41.67%)"
+                  },
+                  {
+                    "value": "6",
+                    "label": "6\/12 (50.00%)"
+                  },
+                  {
+                    "value": "7",
+                    "label": "7\/12 (58.33%)"
+                  },
+                  {
+                    "value": "8",
+                    "label": "8\/12 (66.67%)"
+                  },
+                  {
+                    "value": "9",
+                    "label": "9\/12 (75.00%)"
+                  },
+                  {
+                    "value": "10",
+                    "label": "10\/12 (83.33%)"
+                  },
+                  {
+                    "value": "11",
+                    "label": "11\/12 (91.67%)"
+                  },
+                  {
+                    "value": "12",
+                    "label": "12\/12 (100.00%)"
+                  }
+                 ]
+              },
+        	{
+            "type": "select",
+            "id": "layout_img",
+            "label": "Layout",
+            "default": "left",
+            "options": [
+              {
+                "value": "left",
+                "label": "Image on left"
+              },
+              {
+                "value": "right",
+                "label": "Image on right"
+              }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "type",
+            "label": "Type",
+            "default": "embed",
+            "options":[
+                {
+                    "value": "embed",
+                    "label": "Google map Embed"
+                },
+                {
+                    "value": "image",
+                    "label": "Google map Image"
+                }
+            ]
+        },
+        {
+            "type": "textarea",
+            "id": "googlemap_iframe",
+            "label": "Google Map Code",
+            "placeholder": "Embed Map"
+        },
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Upload image"
+        },
+		{
+          	"type": "header",
+          	"content": "Open time"
+        },
+        {
+            "type": "text",
+            "id": "headingmaps",
+            "label": "Heading",
+            "default": "Heading"
+        },
+        {
+            "type": "textarea",
+            "id": "content_maps",
+            "label": "Content",
+            "default": "content"
+        },
+		{
+          	"type": "header",
+          	"content": "Slideshow Settings"
+        },
+		{
+                  "type": "select",
+                  "id": "colvigor1",
+                  "label": "Setting column Images Destop",
+				  "default": "8",
+                  "options": [
+                        {
+                          "value": "1",
+                          "label": "1\/12 (8.33%)"
+                        },
+                        {
+                          "value": "2",
+                          "label": "2\/12 (16.67%)"
+                        },
+                        {
+                          "value": "3",
+                          "label": "3\/12 (25.00%)"
+                        },
+                        {
+                          "value": "4",
+                          "label": "4\/12 (33.33%)"
+                        },
+                        {
+                          "value": "5",
+                          "label": "5\/12 (41.67%)"
+                        },
+                        {
+                          "value": "6",
+                          "label": "6\/12 (50.00%)"
+                        },
+                        {
+                          "value": "7",
+                          "label": "7\/12 (58.33%)"
+                        },
+                        {
+                          "value": "8",
+                          "label": "8\/12 (66.67%)"
+                        },
+                        {
+                          "value": "9",
+                          "label": "9\/12 (75.00%)"
+                        },
+                        {
+                          "value": "10",
+                          "label": "10\/12 (83.33%)"
+                        },
+                        {
+                          "value": "11",
+                          "label": "11\/12 (91.67%)"
+                        },
+                        {
+                          "value": "12",
+                          "label": "12\/12 (100.00%)"
+                        }
+                       ]
+                    },
+                {
+                  "type": "select",
+                  "id": "colvigor_mobile1",
+                  "label": "Setting column Images Mobile",
+				  "default": "12",
+                  "options": [
+                        {
+                          "value": "1",
+                          "label": "1\/12 (8.33%)"
+                        },
+                        {
+                          "value": "2",
+                          "label": "2\/12 (16.67%)"
+                        },
+                        {
+                          "value": "3",
+                          "label": "3\/12 (25.00%)"
+                        },
+                        {
+                          "value": "4",
+                          "label": "4\/12 (33.33%)"
+                        },
+                        {
+                          "value": "5",
+                          "label": "5\/12 (41.67%)"
+                        },
+                        {
+                          "value": "6",
+                          "label": "6\/12 (50.00%)"
+                        },
+                        {
+                          "value": "7",
+                          "label": "7\/12 (58.33%)"
+                        },
+                        {
+                          "value": "8",
+                          "label": "8\/12 (66.67%)"
+                        },
+                        {
+                          "value": "9",
+                          "label": "9\/12 (75.00%)"
+                        },
+                        {
+                          "value": "10",
+                          "label": "10\/12 (83.33%)"
+                        },
+                        {
+                          "value": "11",
+                          "label": "11\/12 (91.67%)"
+                        },
+                        {
+                          "value": "12",
+                          "label": "12\/12 (100.00%)"
+                        }
+                       ]
+                    },
+        {
+            "type": "checkbox",
+            "id": "autoplay",
+            "label": "Auto-rotate slides",
+            "default": true
+        },
+        {
+            "type": "text",
+            "id": "autoplay_speed",
+            "label": "Change slides every",
+            "info": "Required field number. Ex: 8000",
+            "default": "7000"
+        },
+		{
+            "type": "text",
+            "id": "image_size",
+            "label": "Image Size",
+			"default": "1920x730",
+        	"info": "[Size parameters](https://help.shopify.com/themes/liquid/filters/url-filters#size-parameters)"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "image",
+            "name": "Image slide",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image"
+                },
+                {
+                    "type": "select",
+                    "id": "alignment",
+                    "label": "Caption alignment",
+                    "default": "left",
+                    "options": [
+                        {
+                            "value": "left",
+                            "label": "left"
+                        }
+                    ]
+                },
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Heading",
+                    "default": "Slideshow"
+                },
+                {
+                    "type": "text",
+                    "id": "title2",
+                    "label": "Heading 2",
+                    "default": "Slideshow"
+                },
+				{
+                    "type": "color",
+                    "id": "title_color",
+                    "label": "Heading Color",
+                    "default": "#000"
+                },
+                {
+                    "type": "textarea",
+                    "id": "subheading",
+                    "label": "Subheading",
+                    "default": "Tell your brand's story through video and images"
+                },
+				{
+                    "type": "color",
+                    "id": "subheading_color",
+                    "label": "Subheading Color",
+                    "default": "#000"
+                },
+				{
+                    "type": "text",
+                    "id": "btn_text",
+                    "label": "Button Text"
+                },
+                {
+                    "type": "url",
+                    "id": "link",
+                    "label": "Slide link"
+                }
+            ]
+        },
+        {
+            "type": "video",
+            "name": "Video slide",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "video_id",
+                    "label": "YouTube video id",
+                    "info": "[Find your YouTube video ID](https://docs.joeworkman.net/rapidweaver/stacks/youtube/video-id)."
+                },
+                {
+                    "type": "select",
+                    "id": "video_type",
+                    "label": "Style",
+                    "options": [
+                        {
+                            "value": "chrome",
+                            "label": "Image with play button"
+                        },
+                        {
+                            "value": "background-chrome",
+                            "label": "Background video with play button"
+                        },
+                        {
+                            "value": "background",
+                            "label": "Background video"
+                        }
+                    ]
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image",
+                    "info": "Fallback when autoplaying video is not supported on mobile devices"
+                },
+				{
+                    "type": "select",
+                    "id": "alignment",
+                    "label": "Caption alignment",
+                    "default": "center",
+                    "options": [
+                        {
+                            "value": "center",
+                            "label": "Center"
+                        },
+                        {
+                            "value": "left",
+                            "label": "Left"
+                        },
+                        {
+                            "value": "right",
+                            "label": "Right"
+                        }
+                    ]
+                },
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Heading",
+                    "default": "Slideshow video"
+                },
+				{
+                    "type": "color",
+                    "id": "title_color",
+                    "label": "Heading Color",
+                    "default": "#000"
+                },
+                {
+                    "type": "textarea",
+                    "id": "subheading",
+                    "label": "Subheading",
+                    "default": "Tell your brand's story through video and images"
+                },
+				{
+                    "type": "color",
+                    "id": "subheading_color",
+                    "label": "Subheading Color",
+                    "default": "#000"
+                },
+				{
+                    "type": "text",
+                    "id": "btn_text2",
+                    "label": "Button Text"
+                },
+                {
+                    "type": "url",
+                    "id": "link2",
+                    "label": "Button link"
+                }
+
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Vigor Slideshow + Maps",
+            "category": "Vigor Slideshow",
+            "settings": {
+                "autoplay": true
+            },
+            "blocks": [
+                {
+                    "type": "image"
+                },
+                {
+                    "type": "image"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

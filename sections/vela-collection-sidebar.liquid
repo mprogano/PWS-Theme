@@ -1,0 +1,494 @@
+
+<aside id="velaSidebar" class="velaSidebar col-xs-12 col-sm-12 col-md-3 pull-{{ section.settings.layout-sidebar }}">
+    {% include 'vela-sidebar-categories' %}
+    {% include 'vela-sidebar-organization' %}
+    {% include 'vela-sidebar-ajaxfilter' %}
+    {% include 'vela-sidebar-filterprice' %}
+    {% if section.settings.sidebar_banner_enable %}
+        <div class="velaBannerSidebar">
+            <div class="velaContent">
+                <div class="velaBanner">
+                    <div class="{{ section.settings.effect }}">
+                        {% if section.settings.link != blank %}<a class="banner_effect" href="{{ section.settings.link }}" title="{{ block.settings.image.alt | default: shop.name }}">{% endif %}
+                            {% if section.settings.image != blank %}
+                                <img class="img-responsive" alt="{{ section.settings.image.alt | default: shop.name }}" src="{{ section.settings.image | img_url: section.settings.image_size }}" />
+                            {% else %}
+                                <img class="img-responsive" alt="{{ shop.name }}" src="http://placehold.it/{{ section.settings.image_size }}" />
+                            {% endif %}
+                        {% if section.settings.link != blank %}</a>{% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</aside>
+<script type="text/javascript">
+    $(document).ready( function(){ 
+      	$( ".velaSidebar.pull-hidden_sidebar" ).remove();
+    });
+</script>
+{% schema %}
+    {
+        "name": "Vigor Collection Sidebar",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Sidebar Setting"
+            },
+            {
+                "type": "select",
+                "id": "layout-sidebar",
+                "label": "Select show sidebar",
+				"default": "left",
+                "options": [
+                  {
+                    "value": "left",
+                    "label": "Sidebar on left"
+                  },
+                  {
+                    "value": "right",
+                    "label": "Sidebar on right"
+                  },
+                  {
+                    "value": "hidden_sidebar",
+                    "label": "Hidden sidebar"
+                  }
+                ],
+				"info": "If you hide the sidebar, please go to Vigor Collection Page -> Enable Full width"
+            },
+            {
+                "type": "header",
+                "content": "Sidebar Categories"
+            },
+            {
+                "type": "checkbox",
+                "id": "sidebar_categories_enable",
+                "label": "Enable Sidebar Categories?"
+            },
+            {
+                "type": "text",
+                "id": "sidebar_categories_title",
+                "placeholder": "Title for Block",
+                "label": "Block Title"
+            },
+            {
+                "type": "link_list",
+                "id": "sidebar_categories_menu",
+                "label": "Menu",
+                "info": "Choose menu for block. Add new menu: Admin->Navigation->Menu"
+            },
+            {
+                "type": "header",
+                "content": "Sidebar Filter By Vendor"
+            },
+            {
+                "type": "checkbox",
+                "id": "sidebar_filtervendor_enable",
+                "label": "Enable Filter By Vendor?"
+            },
+            {
+                "type": "text",
+                "id": "sidebar_filtervendor_title",
+                "placeholder": "Title for Block",
+                "label": "Block Title"
+            },
+            {
+                "type": "textarea",
+                "id": "sidebar_filtervendor_list",
+                "placeholder": "Vendor1,Vendor2",
+                "label": "Vendors List",
+                "info": "Separate by a comma \",\""
+            },
+            {
+                "type": "header",
+                "content": "Sidebar Filter By Type"
+            },
+            {
+                "type": "checkbox",
+                "id": "sidebar_filtertype_enable",
+                "label": "Enable Filter By Type?"
+            },
+            {
+                "type": "text",
+                "id": "sidebar_filtertype_title",
+                "placeholder": "Title for Block",
+                "label": "Block Title"
+            },
+            {
+                "type": "textarea",
+                "id": "sidebar_filtertype_list",
+                "placeholder": "Product Type,Product Vendor2",
+                "label": "Product Types List",
+                "info": "Separate by a comma \",\""
+            },
+            {
+                "type": "header",
+                "content": "Sidebar Filter By Price"
+            },
+            {
+                "type": "checkbox",
+                "id": "sidebar_filterprice_enable",
+                "label": "Enable Filter By Price",
+				"default": true
+            },
+            {
+                "type": "text",
+                "id": "sidebar_filterprice_title",
+                "placeholder": "Title for Block",
+                "label": "Block Title"
+            },
+            {
+                "type": "text",
+                "id": "sidebar_filterprice_btntext",
+                "placeholder": "Button text filter",
+                "label": "Button Text",
+                "default": "Filter"
+            },
+            {
+                "type": "text",
+                "id": "sidebar_filterprice_min",
+                "placeholder": "minimum of Price",
+                "label": "Price Min",
+                "default": "0"
+            },
+            {
+                "type": "text",
+                "id": "sidebar_filterprice_max",
+                "placeholder": "Maximum of Price",
+                "label": "Price Max",
+                "default": "600"
+            },
+            {
+                "type": "text",
+                "id": "sidebar_filterprice_prefix",
+                "placeholder": "Ex: $",
+                "label": "Prefix",
+                "default": "$"
+            },
+            {
+                "type": "header",
+                "content": "SIDEBAR CUSTOMIZE TAGS"
+            },
+            {
+                "type": "checkbox",
+                "id": "sidebar_filtercustag_enable",
+                "label": "Enable Customize Tags?"
+            },
+            {
+                "type": "text",
+                "id": "sidebar_filtercustag_title",
+                "placeholder": "Title for Block",
+                "label": "Block Title"
+            },
+            {
+                "type": "header",
+                "content": "Filter by Tags 1",
+                "info": "Located in the block CUSTOMIZE TAGS"
+            },
+            {
+                "type": "checkbox",
+                "id": "sidebar_filtercustag1_enable",
+                "label": "Enable Filter by Tags 1"
+            },
+            {
+                "type": "text",
+                "id": "sidebar_filtercustag1_title",
+                "placeholder": "Title for Block",
+                "label": "Filter by Tags 1 Title"
+            },
+            {
+                "type": "textarea",
+                "id": "sidebar_filtercustag1_list",
+                "placeholder": "Size 1,Size 2",
+                "label": "Product Tags List 1",
+                "info": "Separate by a comma \",\""
+            },
+            {
+                "type": "header",
+                "content": "Filter by Tags 2",
+                "info": "Located in the block CUSTOMIZE TAGS"
+            },
+            {
+                "type": "checkbox",
+                "id": "sidebar_filtercustag2_enable",
+                "label": "Enable Filter by Tags 2"
+            },
+            {
+                "type": "text",
+                "id": "sidebar_filtercustag2_title",
+                "placeholder": "Title for Block",
+                "label": "Filter by Tags 2 Title"
+            },
+            {
+                "type": "textarea",
+                "id": "sidebar_filtercustag2_list",
+                "placeholder": "Price 1,Price 2",
+                "label": "Product Tags List 2",
+                "info": "Separate by a comma \",\""
+            },
+            {
+                "type": "header",
+                "content": "Filter by Tags 3 (Color)",
+                "info": "Located in the block CUSTOMIZE TAGS"
+            },
+            {
+                "type": "checkbox",
+                "id": "sidebar_filtercustag3_enable",
+                "label": "Enable Filter by Tags 3"
+            },
+            {
+                "type": "text",
+                "id": "sidebar_filtercustag3_title",
+                "placeholder": "Title for Block",
+                "label": "Filter by Tags 3 Title"
+            },
+            {
+                "type": "text",
+                "id": "sidebar_filtercustag3_text_1",
+                "label": "Filter by Color Text 1",
+                "default": "Black",
+                "placeholder": "Color name. Ex: \"White\"",
+                "info": "Ex: \"Red\"."
+            },
+            {
+                "type": "image_picker",
+                "id": "color-1",
+                "label": "Filter by Color Image 1"
+            },
+            {
+                "type": "text",
+                "id": "sidebar_filtercustag3_text_2",
+                "label": "Filter by Color Text 2",
+                "placeholder": "Color name. Ex: \"White\""
+            },
+            {
+                "type": "image_picker",
+                "id": "color-2",
+                "label": "Filter by Color Image 2"
+            },
+            {
+                "type": "text",
+                "id": "sidebar_filtercustag3_text_3",
+                "label": "Filter by Color Text 3",
+                "placeholder": "Color name. Ex: \"White\""
+            },
+            {
+                "type": "image_picker",
+                "id": "color-3",
+                "label": "Filter by Color Image 3"
+            },
+            {
+                "type": "text",
+                "id": "sidebar_filtercustag3_text_4",
+                "label": "Filter by Color Text 4",
+                "placeholder": "Color name. Ex: \"White\""
+            },
+            {
+                "type": "image_picker",
+                "id": "color-4",
+                "label": "Filter by Color Image 4"
+            },
+            {
+                "type": "text",
+                "id": "sidebar_filtercustag3_text_5",
+                "label": "Filter by Color Text 5",
+                "placeholder": "Color name. Ex: \"White\""
+            },
+            {
+                "type": "image_picker",
+                "id": "color-5",
+                "label": "Filter by Color Image 5"
+            },
+            {
+                "type": "text",
+                "id": "sidebar_filtercustag3_text_6",
+                "label": "Filter by Color Text 6",
+                "placeholder": "Color name. Ex: \"White\""
+            },
+            {
+                "type": "image_picker",
+                "id": "color-6",
+                "label": "Filter by Color Image 6"
+            },
+            {
+                "type": "text",
+                "id": "sidebar_filtercustag3_text_7",
+                "label": "Filter by Color Text 7",
+                "placeholder": "Color name. Ex: \"White\""
+            },
+            {
+                "type": "image_picker",
+                "id": "color-7",
+                "label": "Filter by Color Image 7"
+            },
+            {
+                "type": "text",
+                "id": "sidebar_filtercustag3_text_8",
+                "label": "Filter by Color Text 8",
+                "placeholder": "Color name. Ex: \"White\""
+            },
+            {
+                "type": "image_picker",
+                "id": "color-8",
+            "label": "Filter by Color Image 8"
+            },
+            {
+                "type": "text",
+                "id": "sidebar_filtercustag3_text_9",
+                "label": "Filter by Color Text 2",
+                "placeholder": "Color name. Ex: \"White\""
+            },
+            {
+                "type": "image_picker",
+                "id": "color-9",
+                "label": "Filter by Color Image 9"
+            },
+            {
+                "type": "text",
+                "id": "sidebar_filtercustag3_text_10",
+                "label": "Filter by Color Text 10",
+                "placeholder": "Color name. Ex: \"White\""
+            },
+            {
+                "type": "image_picker",
+                "id": "color-10",
+                "label": "Filter by Color Image 10"
+            },
+            {
+                "type": "text",
+                "id": "sidebar_filtercustag3_text_11",
+                "label": "Filter by Color Text 11",
+                "placeholder": "Color name. Ex: \"White\""
+            },
+            {
+                "type": "image_picker",
+                "id": "color-11",
+                "label": "Filter by Color Image 11"
+            },
+            {
+                "type": "text",
+                "id": "sidebar_filtercustag3_text_12",
+                "label": "Filter by Color Text 12",
+                "placeholder": "Color name. Ex: \"White\""
+            },
+            {
+                "type": "image_picker",
+                "id": "color-12",
+                "label": "Filter by Color Image 12"
+            },
+            {
+                "type": "text",
+                "id": "sidebar_filtercustag3_text_13",
+                "label": "Filter by Color Text 13",
+                "placeholder": "Color name. Ex: \"White\""
+            },
+            {
+                "type": "image_picker",
+                "id": "color-13",
+                "label": "Filter by Color Image 13"
+            },
+            {
+                "type": "text",
+                "id": "sidebar_filtercustag3_text_14",
+                "label": "Filter by Color Text 14",
+                "placeholder": "Color name. Ex: \"White\""
+            },
+            {
+                "type": "image_picker",
+                "id": "color-14",
+                "label": "Filter by Color Image 14"
+            },
+            {
+                "type": "text",
+                "id": "sidebar_filtercustag3_text_15",
+                "label": "Filter by Color Text 15",
+                "placeholder": "Color name. Ex: \"White\""
+            },
+            {
+                "type": "image_picker",
+                "id": "color-15",
+                "label": "Filter by Color Image 15"
+            },
+            {
+                "type": "text",
+                "id": "sidebar_filtercustag3_text_16",
+                "label": "Filter by Color Text 16",
+                "placeholder": "Color name. Ex: \"White\""
+            },
+            {
+                "type": "image_picker",
+                "id": "color-16",
+                "label": "Filter by Color Image 16"
+            },
+            {
+                "type": "text",
+                "id": "sidebar_filtercustag3_text_17",
+                "label": "Filter by Color Text 17",
+                "placeholder": "Color name. Ex: \"White\""
+            },
+            {
+                "type": "image_picker",
+                "id": "color-17",
+                "label": "Filter by Color Image 17"
+            },
+            {
+                "type": "text",
+                "id": "sidebar_filtercustag3_text_18",
+                "label": "Filter by Color Text 18",
+                "placeholder": "Color name. Ex: \"White\""
+            },
+            {
+                "type": "image_picker",
+                "id": "color-18",
+                "label": "Filter by Color Image 18"
+            },
+            {
+                "type": "header",
+                "content": "Sidebar Banner"
+            },
+            {
+                "type": "checkbox",
+                "id": "sidebar_banner_enable",
+                "label": "Enable Banner Sidebar?"
+            },
+            {
+                "type": "text",
+                "id": "image_size",
+                "label": "Image Size",
+                "info": "Image Size is required."
+            },
+            {
+                "type": "text",
+                "id": "link",
+                "label": "Image Link"
+            },
+            {
+                "type": "image_picker",
+                "id": "image",
+                "label": "Banner Image"
+            },
+            {
+                "type": "select",
+                "id": "effect",
+                "label": "Effect",
+                "default": "effectOne",
+                "options": [
+                    {
+                        "value": "effectOne",
+                        "label": "Effect one"
+                    },
+                    {
+                        "value": "effectTwo",
+                        "label": "Effect two"
+                    }
+                ]
+            }
+        ]
+    }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

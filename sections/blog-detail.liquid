@@ -1,0 +1,54 @@
+{% assign number_of_comments = article.comments_count %}
+{% if comment and comment.created_at %}
+    {% assign number_of_comments = article.comments_count | plus: 1 %}
+{% endif %}
+<div class="col-xs-12 col-sm-12 col-md-9 {% if section.settings.full-width %}col-sm-12 col-md-12{% endif %}">
+    <article class="articleItem" itemscope itemtype="http://schema.org/Article">
+        <header class="articleHeader">
+            <h1 class="velaArticleTitle">{{ article.title }}</h1>
+            <div class="align-items top_rte">
+                    <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}"><i class="ti-timer"></i>{{ article.published_at | date: format: 'month_day_year' }}</time>
+                    <span class="article__author"><i class="ti-user"></i>{{ article.author }}</span>
+                    <a class="comment" href="{{ article.url }}#Comments">
+                      <i class="ti-comment-alt"></i>{{ 'blogs.comments.comments_with_count' | t: count: article.comments_count }}
+                    </a>
+             </div>
+        </header>
+        <div class="rte" itemprop="articleBody">
+            {{ article.content }}
+        </div>
+        {% include 'vela-article-tags' %}
+        {% if blog.next_article or blog.previous_article %}
+            <div class="articleButton clearfix">
+                {% if blog.previous_article %}
+                    <span class="pull-left">
+                        {{ 'blogs.article.older_post' | t | link_to: blog.previous_article }}
+                    </span>
+                {% endif %}
+                {% if blog.next_article %}
+                    <span class="pull-right">
+                        {{ 'blogs.article.newer_post' | t | link_to: blog.next_article }}
+                    </span>
+                {% endif %}
+            </div>
+        {% endif %}
+        {% include 'vela-article-comment' %}
+    </article>
+</div>
+{% schema %}
+  {
+    "name": "Vigor Page Blog List",
+    "settings": [
+        {
+            "type": "header",
+            "content": "Settings page Blog Detail"
+        },
+        {
+          "type": "checkbox",
+          "id": "full-width",
+          "label": " *Enable Full width",
+          "info" : " Use when Hidden the sidebar"
+        }
+    ]
+  }
+{% endschema %}

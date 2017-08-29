@@ -1,0 +1,14 @@
+<div class="velaCartTop">
+	<a href="/cart" class="jsDrawerOpenRight">
+		<span class="zmdi zmdi-shopping-cart zmdi-hc-fw icon"></span>
+		<span class="cartitle"> {{ 'layout.cart.title' | t }}</span>
+		<span id="CartCount">{{ cart.item_count }}</span>
+		<span class="item">{{ 'layout.cart.items_count' | t: count: cart.item_count }}</span>
+		<span id="CartCost">{{ cart.total_price | money }}</span>
+	</a>
+    {% if settings.ajax_cart_method == "only_mini_cart" %}
+        <div id="cartDrawer" class="cart_block dropdown-menu">
+              <div id="cartContainer"></div>
+        </div>
+    {% endif %}
+</div>

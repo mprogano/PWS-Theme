@@ -1,0 +1,115 @@
+{%- assign owlColumn1 = 1 -%}
+{%- assign owlColumn2 = 1 -%}
+{%- assign owlColumn3 = 1 -%}
+{%- assign owlColumn4 = 1 -%}
+
+<div class="vigorTestimonials" style="background-image:url({{ section.settings.bg_img | img_url: '2000x' }}); background-position: top center; background-repeat: no-repeat;background-size: cover;">
+  <div class="container">
+        {% if section.settings.title != blank %}
+            <h3 class="velaHomeTitle">{{ section.settings.title }}</h3>
+        {% endif %}
+        <div class="velaContent">
+            <div class="velaOwlRow owlCarouselPlay">
+                <div class="owl-carousel" 	data-nav="false" 
+                                            data-autoplay="false" 
+                                            data-autospeed="10000" 
+                                            data-speed="300" 
+                                            data-columnone="{{ owlColumn1 }}" 
+                                            data-columntwo="{{ owlColumn2 }}" 
+                                            data-columnthree="{{ owlColumn3 }}"
+                                            data-columnfour="{{ owlColumn4 }}">
+                    {% for block in section.blocks %}
+                        <div class="item">
+                            <div class="testimonialItem clearfix">
+                                {% if block.settings.avatar != blank %}
+                                    <div class="testimonialAvatar align-items">
+                                        <img class="img-responsive" 
+                                             src="{{ block.settings.avatar | img_url:'500x500' }}" 
+                                             alt="{{ block.settings.avatar.alt | default: block.settings.name }}">
+                                    </div>
+                                {% endif %}
+                                <div class="testimonialReview">
+                                    {{ block.settings.review }}
+                                </div>
+                              	<h4 class="testimonialName">{{ block.settings.name }}</h4>
+                              	<span>{{ block.settings.position }}</span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% schema %}
+    {
+        "name": "Vigor Testimonial",
+	    "class": "velaFramework mb-3",
+		"max_blocks": 10,
+        "settings":[
+            {
+                "type": "header",
+                "content": "General Settings"
+            },
+            {
+                "type": "color",
+                "id": "bg_color",
+                "label": "Bg Color",
+                "default": "#f9f9f9"
+            },
+            {
+                "type": "image_picker",
+                "id": "bg_img",
+                "label": "Background Image Block"
+            },
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Title",
+                "placeholder": "Title of section"
+            }
+        ],
+		"blocks": [
+			{
+                "type": "item",
+                "name": "Testimonial Item",
+                "settings": [
+					{
+                        "type": "image_picker",
+                        "id": "avatar",
+                        "label": "Avatar"
+                    },
+                    {
+                        "type": "text",
+                        "id": "name",
+                        "label": "Customer Name"
+                    },
+					{
+                        "type": "text",
+                        "id": "position",
+                        "label": "Customer Position"
+                    },
+                    {
+                        "type": "textarea",
+                        "id": "review",
+                        "label": "Customer Review"
+                    }
+                ]
+            }
+		],
+        "presets": [
+            {
+                "name": "Vigor Testimonials",
+                "category": "Vigor Testimonials",
+				"blocks": [
+                    {
+                        "type":"item"
+                    },
+                    {
+                        "type":"item"
+                    }
+                ]
+            }
+        ]
+    }
+{% endschema %}

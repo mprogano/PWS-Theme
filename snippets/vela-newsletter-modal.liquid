@@ -1,0 +1,76 @@
+{% if settings.vela_newslettermodal_enable %}
+{% if template contains 'index' %}
+    <div id="velaNewsletterModal" class="hidden">
+      	<div class="newsletterModal">
+            <div class="imageNewModal"></div>
+          	<div class="velaBlock velaNewsletterModal clearfix">
+                <h3 class="velaTitle">{{ settings.vela_newslettermodal_titile }}</h3>
+                <div class="velaContent">
+                    {% if settings.vela_newslettermodal_description != blank %}
+                        <div class="newsletterDescription">{{ settings.vela_newslettermodal_description }}</div>
+                    {% endif %}
+                    {% if settings.vela_newslettermodal_mailchimp %}
+                        {% assign form_action = settings.newsletter_formmodal_action %}
+                        <form action="{{ form_action }}" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" class="formNewsletter clearfix">
+                            <div class="form-group">
+                                <input type="email" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}" name="EMAIL" id="mail" class="form-control" aria-label="{{ 'general.newsletter_form.newsletter_email' | t }}" autocorrect="off" autocapitalize="off">
+                                <button id="subscribe" class="btn btnNewsletter" type="submit">
+                                    <i class="pe-7s-paper-plane"></i>
+                                    <span>{{ 'general.newsletter_form.submit' | t }}</span>
+                                </button>
+                            </div>
+                        </form>
+                    {% else %}
+                        {% form 'customer' %}
+                            {% if form.posted_successfully? %}
+                            <script type="text/javascript">
+                                $(document).ready(function() {
+                                  	var date = new Date();
+                                  	var minutes = {{ settings.vela_newslettermodal_cookie }};
+                                    date.setTime(date.getTime() + (minutes * 60 * 1000));
+                                    $('#newsletterAlert').modal();
+                                  	$('#velaNewsletterModal').addClass('hidden');
+                					$.cookie('newLetterModal', 'closed', {expires:date, path:'/'});
+                                });
+                            </script>
+                            {% endif %}
+                            <div class="form-group">
+                                <input class="form-control" id="newsletter-input" type="text" name="contact[email]" placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}">
+                                <button class="btn btnVelaOne btnNewsletter" type="submit">
+                                   	<i class="zmdi zmdi-mail-send zmdi-hc-fw"></i>
+                                    <span>{{ 'general.newsletter_form.submit' | t }}</span>
+                                </button>
+                                <input type="hidden" name="action" value="0">
+                            </div>
+                        {% endform %}
+                    {% endif %}
+                </div>
+            </div>
+      	</div>
+    </div>
+	<script type="text/javascript">
+    	$(window).load(function() {
+        	var dateCookie = new Date();
+            var minutes = {{ settings.vela_newslettermodal_cookie }};
+            dateCookie.setTime(dateCookie.getTime() + (minutes * 60 * 1000));
+            if ($.cookie('newLetterModal') != 'closed') {
+                $.fancybox.open({
+                    padding:0,
+                    'beforeLoad': function(){
+                        $('#velaNewsletterModal').removeClass('hidden');
+                    },
+                    href: '#velaNewsletterModal',
+                    helpers:  {
+                        overlay : true
+                    },
+                    afterClose : function(){
+                        $('#velaNewsletterModal').addClass('hidden');
+                        $.cookie('newLetterModal', 'closed', {expires:dateCookie, path:'/'});
+                    }
+                });
+            }
+          	$('.velaNewsletterModal #contact_form').attr('id','popup_newsletter');
+        });
+	</script>
+{% endif %}
+{% endif %}

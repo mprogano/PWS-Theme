@@ -1,0 +1,65 @@
+<div class="HomeContact">
+  	{% if section.settings.type == 'embed' %}
+        <div class="velaGoogleMap">
+            {% if section.settings.googlemap_iframe != blank %}
+                {{ section.settings.googlemap_iframe }}
+            {% endif %}
+        </div>
+  	{% else %}
+  		<div class="ImageMap">
+          	{% if section.settings.image != blank %}
+            	<img class="img-responsive" alt="{{ section.settings.image.alt | default: shop.name }}" src="{{ section.settings.image | img_url:'master' }}" />
+            {% else %}
+                <div class="NoImagePlaceholder">
+                  	<img class="img-responsive" alt="{{ shop.name }}" src="//placehold.it/300x300" />
+                </div>
+            {% endif %}
+  		</div>
+  	{% endif %}
+</div>
+
+{% schema %}
+    {
+        "name": "Map",
+        "class": "index-section index-section--flush",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Google Map"
+            },
+			{
+                "type": "select",
+                "id": "type",
+                "label": "Type",
+                "default": "embed",
+                "options":[
+                    {
+                        "value": "embed",
+                        "label": "Google map Embed"
+                    },
+                    {
+                        "value": "image",
+                        "label": "Google map Image"
+                    }
+                ]
+            },
+            {
+                "type": "textarea",
+                "id": "googlemap_iframe",
+                "label": "Google Map Code",
+                "placeholder": "Embed Map"
+            },
+			{
+                "type": "image_picker",
+                "id": "image",
+                "label": "Upload image"
+            }
+        ],
+        "presets": [
+            {
+                "name": "Map",
+                "category": "Store information"
+            }
+        ]
+    }
+{% endschema %}

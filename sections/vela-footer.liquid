@@ -1,0 +1,257 @@
+<footer id="footer" {% if section.settings.footer_fixed_enable %}class="footer_fixed"{% endif %}>
+	<div class="footerCenter">
+	    <div class="{% if  section.settings.container_enable %}footer-full{% else %}container{% endif %}">
+	        <div class="footerCenterWrap">
+	            <div class="flexBox-top flexBox-row">
+                  	{% if section.settings.footer_html_enable %}
+	                	<div class="col-xs-12 col-sm-6 col-md-4">
+                          	{% if section.settings.footer_logo_footer_enable %}
+                                <div class="wg-img">
+                                    <a href="/" title="{{ block.settings.image_logo.alt | default: shop.name }}">
+                                          <img class="img-responsive" alt="{{ section.settings.image_logo.alt | default: shop.name }}" src="{{ section.settings.image_logo | img_url: '2000x' }}" />
+                                    </a>
+                                </div>
+                          	{% endif %}
+	                		{% assign fhtmlTitle = section.settings.footer_html_title %}
+	                		{% assign fhtmlContent = section.settings.footer_html_content %}
+	                		{% include 'vela-footer-html' %}
+                          	{% if section.settings.footer_store_enable %}
+                                <div class="footer--Store">
+                                  <div class="store--item">
+                                        <div class="media-left">
+                                              <i class="ti-location-pin"></i>
+                                        </div>
+                                    	<div class="media-body"> 
+                                          	<span class="media-content">{{ section.settings.desc_content }}</span>
+                                        </div>
+                                  </div>
+                                  <div class="store--item">
+                                        <div class="media-left">
+                                              <i class="ti-mobile"></i>
+                                        </div>
+                                    	<div class="media-body"> 
+                                          	<span class="media-content">{{ section.settings.desc_content2 }}</span>
+                                        </div>
+                                  </div>
+                                  <div class="store--item">
+                                        <div class="media-left">
+                                              <i class="ti-email"></i>
+                                        </div>
+                                        <div class="media-body"> 
+                                         	<a href="mailto:{{ section.settings.desc_content3 | url_escape }}?Subject=Support%20Theme" class="media-content">{{ section.settings.desc_content3 }}</a>
+                                        </div>
+                                  </div>
+                                </div>
+                            {% endif %}
+                            {%- assign socialEnable = section.settings.social_enable -%}
+                            {%- assign socialTitle = section.settings.social_title -%}
+                            {%- assign socialFacebook = section.settings.social_facebook -%}
+                            {%- assign socialTwitter = section.settings.social_twitter -%}
+                            {%- assign socialInstagram = section.settings.social_instagram -%}
+                            {%- assign socialPinterest = section.settings.social_pinterest -%}
+                            {%- assign socialYoutube = section.settings.social_youtube -%}
+                            {%- assign socialGooglePlus = section.settings.social_googleplus -%}
+                            {%- assign socialRss = section.settings.social_rss -%}
+                            {% include 'vela-social' %}
+	                	</div>
+	                {% endif %}
+	                {% for block in section.blocks %}
+                  		<div class="footerMenu{{ forloop.index }} {{ block.settings.menu_class }}">
+                          	{%- assign menuTitle = block.settings.menu_title  -%}
+                          	{%- assign menuHandle = block.settings.menu_handle  -%}
+                          	{% include 'vela-footer-menu' %}
+                  		</div>
+                  	{% endfor %}
+	            </div>
+	        </div>
+	    </div>
+    </div>
+    <div class="footerCopyRight">
+    	<div class="{% if section.settings.container_enable %}footer-full{% else %}container{% endif %}">
+          	<div class="align-items border-CopyRight">
+                <div class="velaCopyRight">{{ 'layout.footer.copyright_html' | t }}</div>
+                {% if section.settings.paypal_img_enable %}
+                    <div class="wg-paypal">
+                        <a href="/" title="{{ block.settings.image_logo.alt | default: shop.name }}">
+                              <img class="img-responsive" alt="{{ section.settings.image_logo.alt | default: shop.name }}" src="{{ section.settings.image_paypal | img_url: '200x' }}" />
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+    	</div>
+    </div>
+</footer>
+{% schema %}
+  	{
+        "name": "Footer",
+        "max_blocks": 4,
+        "settings": [
+            {
+              "type": "checkbox",
+              "id": "container_enable",
+              "label": "Full width?",
+              "default": true
+            },
+            {
+              "type": "checkbox",
+              "id": "footer_fixed_enable",
+              "label": "Footer Fix Enable?"
+            },
+            {
+                "type": "header",
+                "content": "Logo Footer"
+            },
+            {
+                "type": "checkbox",
+                "id": "footer_logo_footer_enable",
+                "label": "Enable Logo Footer?"
+            },
+            {
+                "type": "image_picker",
+                "id": "image_logo",
+                "label": "Logo Image"
+            },
+            {
+                "type": "header",
+                "content": "Footer HTML"
+            },
+            {
+                "type": "checkbox",
+                "id": "footer_html_enable",
+                "label": "Enable Footer HTML?"
+            },
+            {
+                "type": "text",
+                "id": "footer_html_title",
+                "label": "Block Title"
+            },
+            {
+                "type": "textarea",
+                "id": "footer_html_content",
+                "label": "Block Content",
+                "info": "You can input code html for content."
+            },
+            {
+                "type": "header",
+                "content": "Footer Contact"
+            },
+	        {
+                "type": "checkbox",
+                "id": "footer_store_enable",
+                "label": "Enable Footer Contact?"
+            },
+            {
+                "type": "text",
+                "id": "desc_content",
+                "label": "1. Description Contact 1"
+            },
+            {
+                "type": "text",
+                "id": "desc_content2",
+                "label": "2. Description Contact 2"
+            },
+            {
+                "type": "text",
+                "id": "desc_content3",
+                "label": "3. Description Contact 3"
+            },
+            {
+                "type": "header",
+                "content": "Block Social"
+            },
+            {
+                "type": "checkbox",
+                "id": "social_enable",
+                "label": "Enable Vela Social?"
+            },
+            {
+                "type": "text",
+                "id": "social_title",
+                "placeholder": "Title for Block",
+                "label": "Block Title",
+                "info": "Title for Block"
+            },
+            {
+                "type": "text",
+                "id": "social_facebook",
+                "placeholder": "Link your Facebook",
+                "label": "Facebook Link"
+            },
+            {
+                "type": "text",
+                "id": "social_twitter",
+                "placeholder": "Link your Twitter",
+                "label": "Twitter Link"
+            },
+            {
+                "type": "text",
+                "id": "social_instagram",
+                "placeholder": "Link your Instagram",
+                "label": "Instagram Link"
+            },
+            {
+                "type": "text",
+                "id": "social_pinterest",
+                "placeholder": "Link your Pinterest",
+                "label": "Pinterest Link"
+            },
+            {
+                "type": "text",
+                "id": "social_youtube",
+                "placeholder": "Link your Youtube",
+                "label": "Youtube Link"
+            },
+            {
+                "type": "text",
+                "id": "social_googleplus",
+                "placeholder": "Link your Googleplus",
+                "label": "Googleplus Link"
+            },
+            {
+                "type": "text",
+                "id": "social_rss",
+                "placeholder": "Link your Rss",
+                "label": "Rss Link"
+            },
+            {
+                "type": "header",
+                "content": "Image paypal"
+            },
+	        {
+                "type": "checkbox",
+                "id": "paypal_img_enable",
+                "label": "Enable Image paypal ?"
+            },
+            {
+                "type": "image_picker",
+                "id": "image_paypal",
+                "label": "paypal Image"
+            }
+		],
+		"blocks": [
+			{
+                "type": "link",
+                "name": "Footer Menu",
+                "settings": [
+					{
+                        "type": "text",
+                        "id": "menu_class",
+                        "label": "Class",
+						"default": "col-xs-12 col-sm-4"
+                    },
+                    {
+                        "type": "text",
+                        "id": "menu_title",
+                        "label": "Title"
+                    },
+                    {
+                        "type": "link_list",
+                        "id": "menu_handle",
+                        "label": "Choose Menu",
+                        "info": "Choose menu for block. Add new menu: Admin -> Navigation"
+                    }
+                ]
+            }
+		]
+	}
+{% endschema %}

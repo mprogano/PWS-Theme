@@ -1,0 +1,8 @@
+{% if settings.countdown_enable %}
+      {% for tag in product.tags %}
+          {% if tag contains 'dealday' %}
+              {% assign countdownTime = tag | replace: 'dealday','' | replace: '_','' %}
+              <div class="product_countdown"  data-countdown="{{ countdownTime }}"></div>
+          {% endif %}
+      {% endfor %}
+{% endif %}

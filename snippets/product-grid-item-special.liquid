@@ -1,0 +1,71 @@
+{% unless proImageSize %}
+	{% assign proImageSize = '900x900' %}
+{% endunless %}
+{% assign on_sale = false %}
+{% if product.compare_at_price > product.price %}
+    {% assign on_sale = true %}
+{% endif %}
+{% assign sold_out = true %}
+{% if product.available %}
+    {% assign sold_out = false %}
+{% endif %}
+<div class="velaProBlock {{ product-grid-item }}" data-price="{{ product.price | money_without_currency }}">
+    <div class="proHImage">
+        <a class="proFeaturedImage" href="{{ product.url }}">
+            <img class="img-responsive" alt="{{ product.featured_image.alt | escape }}" src="{{ product.featured_image | product_img_url:'900x900' }}" />
+            <span class="hidden-sm hidden-xs">
+                {% for image in product.images %}
+                    {% if forloop.first != true %}
+                        <img class="img-responsive" alt="{{ image.alt }}" src="{{ image.src | product_img_url:'900x900' }}">
+                        {% break %}
+                    {% endif %}
+                {% endfor %}
+            </span>
+        </a>
+        {% if on_sale %}
+            <span class="labelSale">{{ 'products.product.label_sale' | t }}</span>
+        {% endif %}
+    </div>
+    <div class="proContent">
+        <h5 class="proName">
+            <a href="{{ product.url }}">{{ product.title }}</a>
+        </h5>
+        {% if settings.product_reviews_enable %}
+            <div class="proReviews">
+                <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+            </div>
+        {% endif %}
+        <div class="proPrice">
+            <div class="priceProduct priceSale">{{ product.price | money }}</div>
+            {% if on_sale %}
+                <div class="priceProduct priceCompare">{{ product.compare_at_price | money }}</div>
+            {% endif %}
+        </div>
+        <div class="proButton">
+            {% assign variantCount = product.variants | size %}
+          	{% include 'vela-product-wishlist' %}
+            <form action="/cart/add" method="post" enctype="multipart/form-data" class="formAddToCart">
+                <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
+                {% if sold_out %}
+                    <button class="btn btnAddToCart disabled" type="submit" value="Submit" disabled>
+                        <i class="zmdi zmdi-shopping-cart"></i>
+                        <span>{{ 'products.product.sold_out' | t }}</span>
+                    </button>
+                {% else %}
+                    {% if variantCount > 1 %}
+                        <a class="btn btnAddToCart" href="{{ product.url }}" title="{{ 'products.product.select_options' | t }}">
+                            <i class="zmdi zmdi-shopping-cart"></i>
+                            <span class="select_options">{{ 'products.product.select_options' | t }}</span>
+                        </a>
+                    {% else %}
+                        <button class="btn btnAddToCart" type="submit" value="Submit">
+                            <i class="zmdi zmdi-shopping-cart"></i>
+                            <span>{{ 'products.product.add_to_cart' | t }}</span>
+                        </button>
+                    {% endif %}
+                {% endif %}
+            </form>
+            {% include 'vela-product-quickview' %}
+        </div>
+    </div>
+</div>
